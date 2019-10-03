@@ -6,9 +6,9 @@ Designed with meticulous detail, we present to you our own version control syste
 ### Types of Installation
 |  | Manual | Global | Local |
 | --- | --- |---| ---|
-| Base Command | ./trackpro (in README directory) | trackpro | trackpro |
-| Superuser privileges required during installation | No | Yes | No |
-| Config file location | ./source/config/trackpro.conf | /etc/trackpro.conf | $HOME/.trackpro/trackpro.conf |
+| **Base Command** | ./trackpro (in README directory) | trackpro | trackpro |
+| **Superuser privileges required during installation** | No | Yes | No |
+| **Config file location** | ./source/config/trackpro.conf | /etc/trackpro.conf | $HOME/.trackpro/trackpro.conf |
 
 ## Uninstall script
 
