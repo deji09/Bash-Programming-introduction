@@ -1,3 +1,5 @@
+# NOTE: Max and Deji code in the source/scripts folder, just makes the install script easier to write 
+
 # trackpro
 ## Boastful Introduction
 Designed with meticulous detail, we present to you our own version control system. No where has seen anything like this before. It's also our group project for the module Computer Systems 2A at the University of Dundee
