@@ -1,4 +1,4 @@
-# NOTE: Max and Deji code in the source/scripts folder, just makes the install script easier to write 
+# NOTE: Max and Deji, write your code in either in the source/trackpro.sh file or the source/scripts folder, just makes the install script easier to write. Turns we can run other scripts from another but we can't import functions like on C so keep that in mind. We could also work in seperate files for now and then combine them later.
 
 # trackpro
 ## Boastful Introduction
