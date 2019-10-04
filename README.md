@@ -20,11 +20,15 @@ trackpro comes with support for 3 major types of installation:
 
 ### Global Install
 To install globally, open up a terminal and run the following command, browse the directory in which trackpro has been downloaded and type in the following command
-```bash sudo ./trackpro.sh```
+```bash 
+sudo ./trackpro.sh
+```
 
 ### Local Install
 To install globally, open up a terminal and run the following command, browse the directory in which trackpro has been downloaded and type in the following command
-```bash ./trackpro.sh```
+```bash
+./trackpro.sh
+```
 
 ## Uninstall script
 
