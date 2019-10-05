@@ -7,16 +7,28 @@ Designed with meticulous detail, we present to you our own version control syste
 ## Install script
 ### Types of Installation
 trackpro comes with support for 3 major types of installation: 
-* Manual - basically DIY, just copy this directory and access the program from the source folder
+* Manual - basically DIY, just copy this directory to where you want it and access the program from the source folder
 * Global - run the install.sh script and the program will be installed for all users in /usr/bin
 * Local - run the install.sh script and the program will be installed for the current user in their home directory
 
 |  | Manual | Global | Local |
 | --- | --- |---| ---|
-| **Base Command** | ./trackpro (in README directory) | trackpro | trackpro |
+| **Base Command** | ./trackpro (in source directory) | trackpro | trackpro |
 | **Superuser privileges required during installation** | No | Yes | No |
 | **Installation Path** | Your choice | /usr/local/bin/trackpro | $HOME/bin/trackpro
 | **Config file location** | ./source/config/trackpro.conf | /etc/trackpro.conf | $HOME/.trackpro/trackpro.conf |
+
+### Global Install
+To install globally, open up a terminal and run the following command, browse the directory in which trackpro has been downloaded and type in the following command
+```bash 
+sudo ./trackpro.sh
+```
+
+### Local Install
+To install globally, open up a terminal and run the following command, browse the directory in which trackpro has been downloaded and type in the following command
+```bash
+./trackpro.sh
+```
 
 ## Uninstall script
 
