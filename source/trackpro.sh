@@ -29,6 +29,7 @@ case $1 in
     -s | --storechanges)
         echo storechanges
         ;;
+	./scripts/storechanges.sh;
     -t | --tar)
         echo tar
         ;;
@@ -48,3 +49,4 @@ esac
 
 
 # Deji's code
+# 
