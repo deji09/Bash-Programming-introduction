@@ -1,4 +1,5 @@
 Sat  5 Oct 21:08:13 BST 2019:
+default:
 ./cow: 
 I like grass.
 
@@ -9,6 +10,7 @@ I eat grass.
 I eat everything.
 
 Sat  5 Oct 21:09:05 BST 2019:
+max:
 ./cow:
 I like grass.
 I like humans.
