@@ -1,8 +1,10 @@
 #!/bin/bash
+# trackpro Installation script
+
 echo "Welcome to the trackpro installer"
 echo "With this installer there are two types of installation"
 echo "For more information please read the README file on Github"
-echo "Please select your preffered option:"
+echo "Please select your preferred option:"
 
 PS3='Please enter your choice: '
 options=("Global" "Local" "Exit Installation")
@@ -29,7 +31,6 @@ do
     esac
 done
 
-# 1) Global
-#     echo global;
-# 2) Local
-#     echo local;
+function global_install() {
+
+}
