@@ -1,6 +1,7 @@
 #!/bin/bash
 version=0.0
 
+
 # Max Kelly's code
 echo "Welcome to the file change tracker (version $version)"
 declare -A my_array
@@ -16,6 +17,7 @@ declare -A my_array
 	if [ -e $file1 ] && [ -e $file2 ]
 	then
 	echo " These files  exist " 
+	
 	else 
 	echo " These files dont exist "
 	fi
