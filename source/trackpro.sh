@@ -1,4 +1,5 @@
 #!/bin/bash
+# trackpro main script 
 version=0.0
 
 # Max Kelly's code
@@ -16,7 +17,8 @@ case $1 in
         echo displayusers
         ;;
     -h | --help)
-        echo displayhelp
+        echo displayhelp;
+        ./scripts/help.sh;
         ;;
     -m | --makerepo)
         echo makerepo
@@ -34,7 +36,13 @@ case $1 in
     -u | --undochange)
         echo undochange
         ;;
-    *) ./scripts/help.sh;
+    *) 
+        if [ "$1" != "" ]; then
+            echo "Command '$1' unrecognized"
+        else
+
+        fi
+        ./scripts/help.sh;
 esac
 
 # Max Fyall's code
