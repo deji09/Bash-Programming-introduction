@@ -9,32 +9,40 @@ echo "Please select your preferred option:"
 system_user=$(whoami)
 
 function globalInstall() {
-    local installPath=/usr/local/bin
+    local installPath=/usr/local/bin/trackpro
     local configPath=/etc
+    local profilePath=/etc/profile
     echo
     if [ "$system_user" == "root" ]; then
+        echo "Global Installation started"
+        mkdir $installPath
         cp -v ./source/trackpro.sh $installPath/trackpro
-        cp -vr ./source/trackpro-scripts $installPath
+        cp -vr ./source/scripts $installPath
         cp -v ./source/config/trackpro.conf $configPath
+        echo "# Enables global trackpro installation " >> $profilePath
+        echo export PATH=$installPath:$PATH >> $profilePath
+        source $profilePath
         echo
         echo "Installation successful"
     else 
-        echo "Install aborted: Superuser privleges required"
+        echo "Installation aborted: Superuser privleges required"
     fi
 }
 
 function localInstall() {
     local installPath=/home/$system_user/bin
     local configPath=/home/$system_user/.trackpro
-    local bashrcPath=/home/$system_user/.bashrc
+    local profilePath=/home/$system_user/.bashrc
     echo
+    echo "Local Installation started"
     mkdir $installPath
     mkdir $configPath
     cp -v ./source/trackpro.sh $installPath/trackpro
-    cp -vr ./source/trackpro-scripts $installPath
+    cp -vr ./source/scripts $installPath
     cp -v ./source/config/trackpro.conf $configPath
-    echo export PATH=/home/$system_user/bin:$PATH >> $bashrcPath
-    source $bashrcPath
+    echo "# Enables local trackpro installation " >> $profilePath
+    echo export PATH=$installPath/trackpro:$PATH >> $profilePath
+    source $profilePath
 }
 
 PS3='Please enter your choice: '
