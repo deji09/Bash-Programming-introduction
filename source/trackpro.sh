@@ -28,8 +28,8 @@ case $1 in
         ;;
     -s | --storechanges)
         echo storechanges
+        ./scripts/storechanges.sh;
         ;;
-	./scripts/storechanges.sh;
     -t | --tar)
         echo tar
         ;;
@@ -40,7 +40,7 @@ case $1 in
         if [ "$1" != "" ]; then
             echo "Command '$1' unrecognized"
         else
-
+            echo "Option argument required"
         fi
         ./scripts/help.sh;
 esac
