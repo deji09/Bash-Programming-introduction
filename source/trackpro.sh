@@ -18,7 +18,7 @@ case $1 in
         ;;
     -h | --help)
         echo displayhelp;
-        ./scripts/help.sh;
+        source ./trakcpro-scripts/help.sh;
         ;;
     -m | --makerepo)
         echo makerepo
@@ -28,7 +28,7 @@ case $1 in
         ;;
     -s | --storechanges)
         echo storechanges
-        ./scripts/storechanges.sh;
+        source ./trackpro-scripts/storechanges.sh;
         ;;
     -t | --tar)
         echo tar
@@ -42,7 +42,7 @@ case $1 in
         else
             echo "Option argument required"
         fi
-        ./scripts/help.sh;
+        ./trackpro-scripts/help.sh;
 esac
 
 # Max Fyall's code
