@@ -5,36 +5,44 @@ echo "Welcome to the trackpro uninstaller"
 echo "We are sad you are leaving us"
 
 system_user=$(whoami)
+option_1=$1
 
-globalInstallPath=/usr/local/bin/trackpro
-localInstallPath=/home/$system_user/bin/trackpro
+function deleteConfig() {
+    if [ option_1 == "--deep" ]; then
+        rm -f $1
+    fi
+}
 
 function globalUnistall() {
+    local configPath=/etc/trackpro.conf
+    local profilePath=/etc/profile
     if [ "$system_user" == "root" ]; then
-        rm -rf $globalInstallPath
+        rm -rvf $globalInstallPath
+        sed '/trackpro/d' -i $profilePath
+        deleteConfig $configPath
     else
         echo "Installation aborted: Superuser privleges required"
     fi
 }
 
 function localUninstall() {
-
-}
-
-function findInstallation() {
-    if [ -e  ]; then
-    else
-    fi
-}
-
-function deleteConfig() {
-    
+    local configPath=/home/$system_user/.trackpro
+    local profilePath=/home/$system_user/.bashrc
+    rm -rf $localInstallPath
+    sed '/trackpro/d' -i $profilePath
+    deleteConfig $configPath
 }
 
 function uninstall() {
+    local globalInstallPath=/usr/local/bin/trackpro
+    local localInstallPath=/home/$system_user/bin/trackpro
     echo "Uninstall started"
-    if [ $1 == "--deep" ]; then
-        deleteConfig
+    if [ -d "$globalInstallPath" ]; then
+        globalUnistall
+    elif [ -d "$localInstallPath" ]; then
+        localUninstall
+    else
+        echo "Installation aborted: No installation found"
     fi
 }
 
