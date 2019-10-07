@@ -1,5 +1,5 @@
 #!/bin/bash
-# trackpro main script 
+# trackpro main script
 version=0.0
 
 # Max Kelly's code
@@ -12,37 +12,37 @@ script_path=`dirname "$0"`
 script_path=`( cd "$script_path" && pwd )`
 
 # Interprets first argument
-case $1 in 
+case $1 in
     -a | --adduser)
         echo adduser
-        ;;
+    ;;
     -b | --beuser)
         echo beuser
-        ;;
+    ;;
     -d | --displayusers)
         echo displayusers
-        ;;
+    ;;
     -h | --help)
         echo displayhelp;
         source $script_path/scripts/help.sh;
-        ;;
+    ;;
     -m | --makerepo)
         echo makerepo
-        ;;
+    ;;
     -l | --listrepos)
         echo listrepos
-        ;;
+    ;;
     -s | --storechanges)
         echo storechanges
         source $(realpath)/scripts/storechanges.sh;
-        ;;
+    ;;
     -t | --tar)
         echo tar
-        ;;
+    ;;
     -u | --undochange)
         echo undochange
-        ;;
-    *) 
+    ;;
+    *)
         if [ "$1" != "" ]; then
             echo "Command '$1' unrecognized"
         else
@@ -57,4 +57,4 @@ cd $user_pwd
 
 
 # Deji's code
-# 
+#
