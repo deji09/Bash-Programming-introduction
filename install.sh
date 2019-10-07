@@ -20,7 +20,7 @@ function globalInstall() {
         cp -vr ./source/scripts $installPath
         cp -v ./source/config/trackpro.conf $configPath
         echo -e "\n# trackpro\nexport PATH=\"$installPath:\$PATH"\" >> $profilePath
-        source $profilePath
+        export PATH="$installPath:$PATH"
         echo
         echo "Installation successful"
     else
@@ -40,7 +40,9 @@ function localInstall() {
     cp -vr ./source/scripts $installPath
     cp -v ./source/config/trackpro.conf $configPath
     echo -e "\n# trackpro\nexport PATH=\"$installPath:\$PATH"\" >> $profilePath
-    source $profilePath
+    export PATH="$installPath:$PATH"
+    echo
+    echo "Installation successful"
 }
 
 PS3='Please enter your choice: '
