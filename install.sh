@@ -23,7 +23,7 @@ function globalInstall() {
         source $profilePath
         echo
         echo "Installation successful"
-    else 
+    else
         echo "Installation aborted: Superuser privleges required"
     fi
 }
@@ -51,14 +51,14 @@ do
         "Global")
             globalInstall
             break
-            ;;
+        ;;
         "Local")
             localInstall
             break
-            ;;
+        ;;
         "Exit Installation")
             break
-            ;;
+        ;;
         *) echo "invalid option $REPLY";;
     esac
 done
