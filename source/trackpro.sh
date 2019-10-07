@@ -5,6 +5,12 @@ version=0.0
 # Max Kelly's code
 echo "Welcome to trackpro (version $version)"
 
+# Stores the current working directory
+user_pwd=$(pwd)
+# Changes to the absolute path of the script
+script_path=`dirname "$0"`
+script_path=`( cd "$script_path" && pwd )`
+
 # Interprets first argument
 case $1 in 
     -a | --adduser)
@@ -18,7 +24,7 @@ case $1 in
         ;;
     -h | --help)
         echo displayhelp;
-        ./scripts/help.sh;
+        source $script_path/scripts/help.sh;
         ;;
     -m | --makerepo)
         echo makerepo
@@ -28,7 +34,7 @@ case $1 in
         ;;
     -s | --storechanges)
         echo storechanges
-        ./scripts/storechanges.sh;
+        source $(realpath)/scripts/storechanges.sh;
         ;;
     -t | --tar)
         echo tar
@@ -42,8 +48,10 @@ case $1 in
         else
             echo "Option argument required"
         fi
-        ./scripts/help.sh;
+        source $script_path/scripts/help.sh;
 esac
+# Changes to the user's previous directory
+cd $user_pwd
 
 # Max Fyall's code
 
