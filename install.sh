@@ -15,12 +15,11 @@ function globalInstall() {
     echo
     if [ "$system_user" == "root" ]; then
         echo "Global Installation started"
-        mkdir $installPath
+        mkdir -pv $installPath
         cp -v ./source/trackpro.sh $installPath/trackpro
         cp -vr ./source/scripts $installPath
         cp -v ./source/config/trackpro.conf $configPath
-        echo "# Enables global trackpro installation " >> $profilePath
-        echo export PATH=$installPath:$PATH >> $profilePath
+        echo -e "\n# trackpro\nexport PATH=\"$installPath:\$PATH"\" >> $profilePath
         source $profilePath
         echo
         echo "Installation successful"
@@ -30,18 +29,17 @@ function globalInstall() {
 }
 
 function localInstall() {
-    local installPath=/home/$system_user/bin
+    local installPath=/home/$system_user/bin/trackpro
     local configPath=/home/$system_user/.trackpro
     local profilePath=/home/$system_user/.bashrc
     echo
     echo "Local Installation started"
-    mkdir $installPath
-    mkdir $configPath
+    mkdir -pv $installPath
+    mkdir -pv $configPath
     cp -v ./source/trackpro.sh $installPath/trackpro
     cp -vr ./source/scripts $installPath
     cp -v ./source/config/trackpro.conf $configPath
-    echo "# Enables local trackpro installation " >> $profilePath
-    echo export PATH=$installPath/trackpro:$PATH >> $profilePath
+    echo -e "\n# trackpro\nexport PATH=\"$installPath:\$PATH"\" >> $profilePath
     source $profilePath
 }
 
@@ -58,9 +56,6 @@ do
             localInstall
             break
             ;;
-        # "Option 3")
-        #     echo "you chose choice $REPLY which is $opt"
-        #     ;;
         "Exit Installation")
             break
             ;;
