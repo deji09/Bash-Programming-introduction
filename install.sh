@@ -10,7 +10,7 @@ system_user=$(whoami)
 
 function globalInstall() {
     local installPath=/usr/local/bin/trackpro
-    local configPath=/etc
+    local configPath=/etc/trackpro.conf
     local profilePath=/etc/profile
     echo
     if [ "$system_user" == "root" ]; then
