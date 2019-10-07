@@ -29,9 +29,9 @@ function globalInstall() {
 }
 
 function localInstall() {
-    local installPath=/home/$system_user/bin/trackpro
-    local configPath=/home/$system_user/.trackpro
-    local profilePath=/home/$system_user/.bashrc
+    local installPath=$HOME/bin/trackpro
+    local configPath=$HOME/.trackpro
+    local profilePath=$HOME/.bashrc
     echo
     echo "Local Installation started"
     mkdir -pv $installPath
