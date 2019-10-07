@@ -6,10 +6,11 @@ echo "We are sad you are leaving us"
 
 system_user=$(whoami)
 option_1=$1
+option_2=$2
 
 function deleteConfig() {
-    if [ option_1 == "--deep" ]; then
-        rm -f $1
+    if [ $option_1 == "--deep" ] || [ $option_2 == "--deep" ]; then
+        rm -rvf $1
     fi
 }
 
@@ -20,33 +21,37 @@ function globalUnistall() {
         rm -rvf $globalInstallPath
         sed '/trackpro/d' -i $profilePath
         deleteConfig $configPath
+        echo "Uninstallation successful"
     else
-        echo "Installation aborted: Superuser privleges required"
+        echo "Uninstallation aborted: Superuser privleges required"
     fi
 }
 
 function localUninstall() {
-    local configPath=/home/$system_user/.trackpro
-    local profilePath=/home/$system_user/.bashrc
-    rm -rf $localInstallPath
+    local configPath=$HOME/.trackpro
+    local profilePath=$HOME/.bashrc
+    rm -rvf $localInstallPath
     sed '/trackpro/d' -i $profilePath
     deleteConfig $configPath
+    echo "Uninstallation successful"
 }
 
 function uninstall() {
     local globalInstallPath=/usr/local/bin/trackpro
-    local localInstallPath=/home/$system_user/bin/trackpro
-    echo "Uninstall started"
+    local localInstallPath=$HOME/bin/trackpro
+    echo "Uninstallation started"
     if [ -d "$globalInstallPath" ]; then
         globalUnistall
     elif [ -d "$localInstallPath" ]; then
         localUninstall
     else
-        echo "Installation aborted: No installation found"
+        echo "Uninstallation aborted: No installation found"
     fi
 }
 
-if [ $1 != "-y" && $2 != "-y" ]; then
+if [ $option_1 == "-y" ] || [ $option_2 == "-y" ]; then
+    uninstall
+else
     read -p "Are you sure you want to uninstall trackpro [N/y] " yn
     case $yn in
         [Yy]* )
@@ -58,6 +63,4 @@ if [ $1 != "-y" && $2 != "-y" ]; then
             exit
         ;;
     esac
-else
-    uninstall
 fi
