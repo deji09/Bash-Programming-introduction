@@ -10,7 +10,7 @@ system_user=$(whoami)
 
 function globalInstall() {
     local installPath=/usr/local/bin/trackpro
-    local configPath=/etc
+    local configPath=/etc/trackpro.conf
     local profilePath=/etc/profile
     echo
     if [ "$system_user" == "root" ]; then
@@ -20,18 +20,18 @@ function globalInstall() {
         cp -vr ./source/scripts $installPath
         cp -v ./source/config/trackpro.conf $configPath
         echo -e "\n# trackpro\nexport PATH=\"$installPath:\$PATH"\" >> $profilePath
-        source $profilePath
+        export PATH="$installPath:$PATH"
         echo
         echo "Installation successful"
-    else 
+    else
         echo "Installation aborted: Superuser privleges required"
     fi
 }
 
 function localInstall() {
-    local installPath=/home/$system_user/bin/trackpro
-    local configPath=/home/$system_user/.trackpro
-    local profilePath=/home/$system_user/.bashrc
+    local installPath=$HOME/bin/trackpro
+    local configPath=$HOME/.trackpro
+    local profilePath=$HOME/.bashrc
     echo
     echo "Local Installation started"
     mkdir -pv $installPath
@@ -40,7 +40,9 @@ function localInstall() {
     cp -vr ./source/scripts $installPath
     cp -v ./source/config/trackpro.conf $configPath
     echo -e "\n# trackpro\nexport PATH=\"$installPath:\$PATH"\" >> $profilePath
-    source $profilePath
+    export PATH="$installPath:$PATH"
+    echo
+    echo "Installation successful"
 }
 
 PS3='Please enter your choice: '
@@ -51,14 +53,14 @@ do
         "Global")
             globalInstall
             break
-            ;;
+        ;;
         "Local")
             localInstall
             break
-            ;;
+        ;;
         "Exit Installation")
             break
-            ;;
+        ;;
         *) echo "invalid option $REPLY";;
     esac
 done
