@@ -36,6 +36,7 @@ To uninstall trackpro, use the uninstall script, this can be done in this direct
 (sudo) ./uninstall.sh
 ```
 There also some additional arguments that can be added to this including:
+
 | Argument | What it does? |
 | --- | --- |
 | **--deep** | This will also delete configuration files | 
