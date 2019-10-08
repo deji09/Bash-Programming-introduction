@@ -1,13 +1,13 @@
 # NOTE: Max and Deji, write your code in either in the source/trackpro.sh file or the source/scripts folder, just makes the install script easier to write. Turns out we can run other scripts from another but we can't import functions like on C so keep that in mind. We could also work in seperate files for now and then combine them later.
 
 # trackpro
-## Names/matriculation numbers
+## Names and matriculation numbers
 
 |**Name**|**Matriculation Number**|
 | --- | --- |
-| Ayodeji Shote | XXXXXXXXX |
-| Max Fyall | XXXXXXXXX |
-| Max Kelly | 180004073 |
+| **Ayodeji Shote** | XXXXXXXXX |
+| **Max Fyall** | XXXXXXXXX |
+| **Max Kelly** | 180004073 |
 
 
 ## Boastful Introduction
@@ -30,13 +30,13 @@ trackpro comes with support for 3 major types of installation:
 ### Global Install
 To install globally, open up a terminal and run the following command, browse the directory in which trackpro has been downloaded and type in the following command
 ```bash 
-sudo ./trackpro.sh
+sudo ./install.sh
 ```
 
 ### Local Install
 To install globally, open up a terminal and run the following command, browse the directory in which trackpro has been downloaded and type in the following command
 ```bash
-./trackpro.sh
+./install.sh
 ```
 ## Howto
 To run the command after installation use the following command structure:
