@@ -46,6 +46,7 @@ globalInstall() {
         # Installs the application passing in the appropriate values
         install $installPath $configPath $profilePath
         # Edits the user's PATH for the current session for the same reason
+        # This can be a bit temperamental 
         export PATH="$installPath:$PATH"
     else
         echo "Installation aborted: Superuser privleges required"
@@ -70,6 +71,7 @@ localInstall() {
     # Installs the application passing in the appropriate values
     install $installPath $configPath $profilePath
     # Seems to be the only reliable way I've found to reload the path for a local install within the script
+    # Although it may still be temperamental 
     exec /bin/bash
 }
 
