@@ -25,7 +25,8 @@ install() {
     # Edits the user's PATH at launch so the user can just type trackpro in every directory
     echo -e "\n# trackpro\nexport PATH=\"$installPath:\$PATH"\" >> $profilePath
     # Edits the user's PATH for the current session for the same reason
-    export PATH="$installPath:$PATH"
+    # export PATH="$installPath:$PATH"
+    # source $installPath
     echo
     echo "Installation successful"
 }
@@ -44,6 +45,8 @@ globalInstall() {
         echo "Global Installation started"
         # Installs the application passing in the appropriate values
         install $installPath $configPath $profilePath
+        # Edits the user's PATH for the current session for the same reason
+        export PATH="$installPath:$PATH"
     else
         echo "Installation aborted: Superuser privleges required"
     fi
@@ -66,6 +69,8 @@ localInstall() {
     fi
     # Installs the application passing in the appropriate values
     install $installPath $configPath $profilePath
+    # Seems to be the only reliable way I've found to reload the path for a local install within the script
+    exec /bin/bash
 }
 
 # Introduction message
