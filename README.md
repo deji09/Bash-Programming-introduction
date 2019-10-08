@@ -69,5 +69,5 @@ To uninstall trackpro, use the uninstall script, this can be done in this direct
 
 | Options | Action |
 | --- | --- |
-| **--deep** | Deletes configuration files during uninstall | 
-| **-y** | Prevents the user from being asked to uninstall |
+| --deep | Deletes configuration files during uninstall | 
+| -y | Prevents the user from being asked to uninstall |
