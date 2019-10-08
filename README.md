@@ -2,9 +2,9 @@
 
 # trackpro
 ## Boastful Introduction
-Designed with meticulous detail, we present to you our own version control system. No where has seen anything like this before. It's also our group project for the module Computer Systems 2A at the University of Dundee
+Designed with meticulous detail, we present to you our own version control system. No where has seen anything like this before. It's also our group project for the module Computer Systems 2A at the University of Dundee.
 
-## Install script
+## Installation
 ### Types of Installation
 trackpro comes with support for 3 major types of installation: 
 * Manual - basically DIY, just copy this directory to where you want it and access the program from the source folder
@@ -29,21 +29,45 @@ To install globally, open up a terminal and run the following command, browse th
 ```bash
 ./trackpro.sh
 ```
+## Howto
+To run the command after installation use the following command structure:
+```bash
+trackpro [options] [target]
+```
 
-## Uninstall script
+### Options
+
+| Shorthand Command | Full Command | Action |
+| --- | --- | --- |
+| -a | --adduser | Adds a user to the trackpro configuration file followed by the new user's name |
+| -b | --beuser | Changes to the specified user |
+| -d | --displayusers | Displays a list of the users in the trackpro configuration file |
+| -h | --help | Displays this help screen |
+| -m | --makerepo | Makes a trackpro repository |
+| -l | --listrepos | Lists the trackpro repositories stored in the trackpro configuration file |
+| -s | --storechanges | Stores changes of a trackpro repository |
+| -t | --tar | Compresses a version of a trackpro repository |
+| -u | --undochange | Undoes a change built into a trackpro repository |
+
+### Target
+
+| Shorthand Commands | Full commands | Target |
+| --- | --- | --- |
+| -a, -b | --adduser, --beuser | User name |
+| -m, -t, -u | --makerepo, --tar, --undochange | Repository name |
+| -s | --storechanges | Repository name or all (to do so for all repositories) |
+| -d, -h, -l | --displayusers, --help, --listrepos | No target required |
+
+## Source structure
+
+## Uninstallation
 To uninstall trackpro, use the uninstall script, this can be done in this directory (with sudo being omitted for a local uninstallation, just like the installation):
 ```bash
-(sudo) ./uninstall.sh
+(sudo) ./uninstall.sh [options]
 ```
-There also some additional arguments that can be added to this including:
+### Options
 
-| Argument | What it does? |
+| Options | Action |
 | --- | --- |
-| **--deep** | This will also delete configuration files | 
-| **-y** | This will prevent the user being asked to uninstall |
-
-* --deep \t This will also delete configuration files
-* -y \t This will prevent the user being asked to uninstall
-
-
-## Source
+| **--deep** | Deletes configuration files during uninstall | 
+| **-y** | Prevents the user from being asked to uninstall |
