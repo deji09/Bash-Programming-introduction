@@ -14,7 +14,7 @@ trackpro comes with support for 3 major types of installation:
 |  | Manual | Global | Local |
 | --- | --- |---| ---|
 | **Base Command** | ./trackpro (in source directory) | trackpro | trackpro |
-| **Superuser privileges required during installation** | No | Yes | No |
+| **Superuser privileges required during (un)installation** | No | Yes | No |
 | **Installation Path** | Your choice | /usr/local/bin/trackpro | $HOME/bin/trackpro
 | **Config file location** | ./source/config/trackpro.conf | /etc/trackpro.conf | $HOME/.trackpro/trackpro.conf |
 
