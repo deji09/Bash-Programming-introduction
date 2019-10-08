@@ -34,7 +34,7 @@ case $1 in
     ;;
     -s | --storechanges)
         echo storechanges
-        source $(realpath)/scripts/storechanges.sh;
+        source $script_path/scripts/storechanges.sh;
     ;;
     -t | --tar)
         echo tar
