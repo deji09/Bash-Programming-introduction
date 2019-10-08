@@ -31,5 +31,13 @@ To install globally, open up a terminal and run the following command, browse th
 ```
 
 ## Uninstall script
+To uninstall trackpro, use the uninstall script, this can be done in this directory (with sudo being omitted for a local uninstallation, just like the installation):
+```bash
+(sudo) ./uninstall.sh
+```
+There also some additional arguments that can be added to this including:
+* --deep \t This will also delete configuration files
+* -y \t This will prevent the user being asked to uninstall
+
 
 ## Source
