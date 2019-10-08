@@ -8,13 +8,13 @@ system_user=$(whoami)
 option_1=$1
 option_2=$2
 
-function deleteConfig() {
-    if [ $option_1 == "--deep" ] || [ $option_2 == "--deep" ]; then
+deleteConfig() {
+    if [ "$option_1" == "--deep" ] || [ "$option_2" == "--deep" ]; then
         rm -rvf $1
     fi
 }
 
-function globalUnistall() {
+globalUnistall() {
     local configPath=/etc/trackpro.conf
     local profilePath=/etc/profile
     if [ "$system_user" == "root" ]; then
@@ -27,7 +27,7 @@ function globalUnistall() {
     fi
 }
 
-function localUninstall() {
+localUninstall() {
     local configPath=$HOME/.trackpro
     local profilePath=$HOME/.bashrc
     rm -rvf $localInstallPath
@@ -36,7 +36,7 @@ function localUninstall() {
     echo "Uninstallation successful"
 }
 
-function uninstall() {
+uninstall() {
     local globalInstallPath=/usr/local/bin/trackpro
     local localInstallPath=$HOME/bin/trackpro
     echo "Uninstallation started"
@@ -49,7 +49,7 @@ function uninstall() {
     fi
 }
 
-if [ $option_1 == "-y" ] || [ $option_2 == "-y" ]; then
+if [ "$option_1" == "-y" ] || [ "$option_2" == "-y" ]; then
     uninstall
 else
     read -p "Are you sure you want to uninstall trackpro [N/y] " yn
