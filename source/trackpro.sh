@@ -2,29 +2,54 @@
 # trackpro main script
 version=0.0
 
-# Max Kelly's code
-echo "Welcome to trackpro (version $version)"
-
 # Stores the current working directory
-user_pwd=$(pwd)
+userPwd=$(pwd)
 # Changes to the absolute path of the script
-script_path=`dirname "$0"`
-script_path=`( cd "$script_path" && pwd )`
+trackproPath=`dirname "$0"`
+trackproPath=`( cd "$trackproPath" && pwd )`
 
+# Sets the configuration path and imports its variables
+setConfigPath() {
+    local localConfigPath=$HOME/.trackpro
+    local globalConfigPath=/etc/trackpro.conf
+    local sourceConfigPath=$trackproPath/source/config/trackpro.conf
+    # If there's a local configuration file import it
+    if [ -f "$localConfigPath" ]; then
+        # Gets the variables from the configuration file
+        source $localConfigPath
+        # Sets the configuration path
+        configPath=$localConfigPath
+    elif [ -f "$globalConfigPath" ]; then
+        source $globalConfigPath
+        configPath=$globalConfigPath
+    elif [ -f "$sourceConfigPath" ]; then
+        source $sourceConfigPath
+        configPath=$sourceConfigPath
+    else 
+        echo "Error: No valid configuration file found"
+    fi
+}
+
+# Displays the welcome message
+echo "Welcome to trackpro (version $version)"
+# Sets the configuration file and imports its variables
+setConfigPath
 # Interprets first argument
 case $1 in
     -a | --adduser)
         echo adduser
+        echo Liked deprecated
     ;;
     -b | --beuser)
         echo beuser
+        echo Liked deprecated
     ;;
     -d | --displayusers)
         echo displayusers
     ;;
     -h | --help)
         echo displayhelp;
-        source $script_path/scripts/help.sh;
+        source $trackproPath/scripts/help.sh;
     ;;
     -m | --makerepo)
         echo makerepo
@@ -34,7 +59,7 @@ case $1 in
     ;;
     -s | --storechanges)
         echo storechanges
-        source $script_path/scripts/storechanges.sh;
+        source $trackproPath/scripts/storechanges.sh;
     ;;
     -t | --tar)
         echo tar
@@ -48,13 +73,8 @@ case $1 in
         else
             echo "Option argument required"
         fi
-        source $script_path/scripts/help.sh;
+        source $trackproPath/scripts/help.sh;
 esac
+
 # Changes to the user's previous directory
-cd $user_pwd
-
-# Max Fyall's code
-
-
-# Deji's code
-#
+cd $userPwd
