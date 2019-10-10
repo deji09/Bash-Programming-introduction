@@ -2,8 +2,6 @@
 # trackpro main script
 version=0.0
 
-# Stores the current working directory
-userPwd=$(pwd)
 # Changes to the absolute path of the script
 trackproPath=`dirname "$0"`
 trackproPath=`( cd "$trackproPath" && pwd )`
@@ -53,16 +51,17 @@ case $1 in
     ;;
     -m | --makerepo)
         echo makerepo
+        source $trackproPath/scripts/makerepo.sh $1 $configPath;
     ;;
     -l | --listrepos)
-        echo listrepos
+        echo listrepos $repoPaths
     ;;
     -s | --storechanges)
         echo storechanges
-        source $trackproPath/scripts/storechanges.sh;
+        source $trackproPath/scripts/storechanges.sh $1 $repoPaths;
     ;;
     -t | --tar)
-        echo tar
+        echo tar 
     ;;
     -u | --undochange)
         echo undochange
@@ -75,6 +74,3 @@ case $1 in
         fi
         source $trackproPath/scripts/help.sh;
 esac
-
-# Changes to the user's previous directory
-cd $userPwd
