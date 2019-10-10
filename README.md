@@ -5,8 +5,8 @@
 
 |**Name**|**Matriculation Number**|
 | --- | --- |
-| **Ayodeji Shote** | XXXXXXXXX |
-| **Max Fyall** | XXXXXXXXX |
+| **Ayodeji Shote** | 180004145 |
+| **Max Fyall** | 180011724 |
 | **Max Kelly** | 180004073 |
 
 
