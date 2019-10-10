@@ -34,16 +34,9 @@ echo "Welcome to trackpro (version $version)"
 setConfigPath
 # Interprets first argument
 case $1 in
-    -a | --adduser)
-        echo adduser
-        echo Liked deprecated
-    ;;
-    -b | --beuser)
-        echo beuser
-        echo Liked deprecated
-    ;;
-    -d | --displayusers)
-        echo displayusers
+    -c | --changesettings)
+        echo changesettings
+        source $trackproPath/scripts/changesettings.sh $configPath
     ;;
     -h | --help)
         echo displayhelp;
@@ -51,20 +44,23 @@ case $1 in
     ;;
     -m | --makerepo)
         echo makerepo
-        source $trackproPath/scripts/makerepo.sh $1 $configPath;
+        source $trackproPath/scripts/makerepo.sh $2 $configPath;
     ;;
     -l | --listrepos)
         echo listrepos $repoPaths
+        source $trackproPath/scripts/listrepos.sh $repoPaths;
     ;;
     -s | --storechanges)
         echo storechanges
-        source $trackproPath/scripts/storechanges.sh $1 $repoPaths;
+        source $trackproPath/scripts/storechanges.sh $2 $repoPaths;
     ;;
     -t | --tar)
         echo tar 
+        source $trackproPath/scripts/tar.sh $2 $configPath;
     ;;
     -u | --undochange)
         echo undochange
+        source $trackproPath/scripts/undochange.sh $2 $configPath;
     ;;
     *)
         if [ "$1" != "" ]; then
