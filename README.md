@@ -1,5 +1,3 @@
-# NOTE: Max and Deji, write your code in either in the source/trackpro.sh file or the source/scripts folder, just makes the install script easier to write. Turns out we can run other scripts from another but we can't import functions like on C so keep that in mind. We could also work in seperate files for now and then combine them later.
-
 # trackpro
 ## Names and matriculation numbers
 
