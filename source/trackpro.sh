@@ -11,7 +11,7 @@ trackproPath=`( cd "$trackproPath" && pwd )`
 
 # Sets the configuration path and imports its variables
 setConfigPath() {
-    local localConfigPath=$HOME/.trackpro
+    local localConfigPath=$HOME/.trackpro/trackpro.conf
     local globalConfigPath=/etc/trackpro.conf
     local sourceConfigPath=$trackproPath/config/trackpro.conf
     # If there's a local configuration file import it
@@ -35,41 +35,50 @@ setConfigPath() {
 echo "Welcome to trackpro (version $version)"
 # Sets the configuration file and imports its variables
 setConfigPath
+# 
+if [ "$1" == "" ]; then
+    echo "Error: Option argument required"
+    source $trackproPath/scripts/help.sh;
+fi
+# 
+if [ "$2" == "" ]; then
+    target=null
+else 
+    target=$2
+fi
 # Interprets first argument
-case $1 in
-    -c | --changesettings)
-        echo changesettings
-        source $trackproPath/scripts/changesettings.sh $configPath
-    ;;
-    -h | --help)
-        echo displayhelp;
-        source $trackproPath/scripts/help.sh;
-    ;;
-    -m | --makerepo)
-        echo makerepo
-        source $trackproPath/scripts/makerepo.sh $2 $configPath;
-    ;;
-    -l | --listrepos)
-        echo listrepos $repoPaths
-        source $trackproPath/scripts/listrepos.sh $repoPaths;
-    ;;
-    -s | --storechanges)
-        echo storechanges
-        source $trackproPath/scripts/storechanges.sh $2 $repoPaths;
-    ;;
-    -t | --tar)
-        echo tar 
-        source $trackproPath/scripts/tar.sh $2 $configPath;
-    ;;
-    -u | --undochange)
-        echo undochange
-        source $trackproPath/scripts/undochange.sh $2 $configPath;
-    ;;
-    *)
-        if [ "$1" != "" ]; then
-            echo "Command '$1' unrecognized"
-        else
-            echo "Option argument required"
-        fi
-        source $trackproPath/scripts/help.sh;
-esac
+while getopts "chmlstu" opt; do
+    case ${opt} in
+        c )
+            echo changesettings
+            source $trackproPath/scripts/changesettings.sh $configPath
+        ;;
+        h )
+            echo displayhelp;
+            source $trackproPath/scripts/help.sh;
+        ;;
+        m )
+            echo makerepo
+            source $trackproPath/scripts/makerepo.sh $target $configPath;
+        ;;
+        l )
+            echo listrepos $repoPaths
+            source $trackproPath/scripts/listrepos.sh $repoPaths;
+        ;;
+        s )
+            echo storechanges
+            source $trackproPath/scripts/storechanges.sh $target $repoPaths;
+        ;;
+        t )
+            echo tar 
+            source $trackproPath/scripts/tar.sh $target $configPath;
+        ;;
+        u )
+            echo undochange
+            source $trackproPath/scripts/undochange.sh $target $configPath;
+        ;;
+        * )
+            source $trackproPath/scripts/help.sh;
+    esac
+done
+

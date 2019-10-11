@@ -20,7 +20,7 @@ trackpro comes with support for 3 major types of installation:
 
 |  | Manual | Global | Local |
 | --- | --- |---| ---|
-| **Base Command** | ./trackpro (in source directory) | trackpro | trackpro |
+| **Base Command** | ./trackpro.sh (in source directory) | trackpro | trackpro |
 | **Superuser privileges required during (un)installation** | No | Yes | No |
 | **Installation Path** | Your choice | /usr/local/bin/trackpro | $HOME/bin/trackpro
 | **Config file location** | ./source/config/trackpro.conf | /etc/trackpro.conf | $HOME/.trackpro/trackpro.conf |
@@ -46,9 +46,7 @@ trackpro [options] [target]
 
 | Shorthand Command | Full Command | Action |
 | --- | --- | --- |
-| -a | --adduser | Adds a user to the trackpro configuration file followed by the new user's name |
-| -b | --beuser | Changes to the specified user |
-| -d | --displayusers | Displays a list of the users in the trackpro configuration file |
+| -c | --changesettings | Used to change settings for each user, all users and for each repository |
 | -h | --help | Displays this help screen |
 | -m | --makerepo | Makes a trackpro repository |
 | -l | --listrepos | Lists the trackpro repositories stored in the trackpro configuration file |
@@ -60,10 +58,9 @@ trackpro [options] [target]
 
 | Shorthand Commands | Full commands | Target |
 | --- | --- | --- |
-| -a, -b | --adduser, --beuser | User name |
-| -m, -t, -u | --makerepo, --tar, --undochange | Repository name |
-| -s | --storechanges | Repository name or all (to do so for all repositories) |
-| -d, -h, -l | --displayusers, --help, --listrepos | No target required |
+| -m, -t, -u | --makerepo, --tar, --undochange | Repository name or path |
+| -s | --storechanges | Repository name, path or all |
+| -c, -h, -l | --changesettings, --help, --listrepos | No target required |
 
 ## Source structure
 
