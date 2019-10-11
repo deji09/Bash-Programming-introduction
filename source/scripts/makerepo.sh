@@ -14,10 +14,17 @@ make() {
         mkdir -pv ./.trackpro/$time
         echo -e "name=$(basename $target)" >> ./.trackpro/repo.conf
         echo -e "created=$time"  >> ./.trackpro/repo.conf
-        for entry in "$(ls)"; do
-            echo -e ":$(whoami):$time:$entry:" >> ./.trackpro/changes.conf
-            cp -pv $entry ./.trackpro/$time
+
+        # Credits to stackexchange user Mikel
+        # Link: https://unix.stackexchange.com/questions/9496/looping-through-files-with-spaces-in-the-names
+        OIFS="$IFS"
+        IFS=$'\n'
+        find . -type f -name "*" ! -path "./.trackpro/*" -print0 | while IFS= read -r -d '' file; do
+            echo "file = $file"
+            echo -e ":$(whoami):$time:$file:" >> ./.trackpro/changes.conf
+            cp -pv $file ./.trackpro/$time
         done
+        IFS="$OIFS"
 
         # Edits the user's PATH at launch so the user can just type trackpro in every directory
         # echo -e "\nexport PATH=\"$installPath:\$PATH"\" >> $profilePath
