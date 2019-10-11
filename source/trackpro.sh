@@ -2,6 +2,9 @@
 # trackpro main script
 version=0.0
 
+# Variables to set user arguments for debugging
+# $1 = -c
+
 # Changes to the absolute path of the script
 trackproPath=`dirname "$0"`
 trackproPath=`( cd "$trackproPath" && pwd )`
@@ -10,7 +13,7 @@ trackproPath=`( cd "$trackproPath" && pwd )`
 setConfigPath() {
     local localConfigPath=$HOME/.trackpro
     local globalConfigPath=/etc/trackpro.conf
-    local sourceConfigPath=$trackproPath/source/config/trackpro.conf
+    local sourceConfigPath=$trackproPath/config/trackpro.conf
     # If there's a local configuration file import it
     if [ -f "$localConfigPath" ]; then
         # Gets the variables from the configuration file
