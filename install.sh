@@ -106,7 +106,7 @@ do
         *) 
         # Prints what the user's typed
         echo "Invalid Option: $REPLY"
-        echo "Please enter an invalid"
+        echo "Please enter a valid option"
         ;;
     esac
 done
