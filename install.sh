@@ -17,7 +17,7 @@ install() {
     cp -v ./source/trackpro.sh $installPath/trackpro
     # Copies the additional scripts
     cp -vr ./source/scripts $installPath
-    # Checks if there's alrready a configuaration file
+    # Checks if there's already a configuaration file
     if [ ! -f $configPath ]; then
         # Copies the main configuration file
         cp -v ./source/config/trackpro.conf $configPath
