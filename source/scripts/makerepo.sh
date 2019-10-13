@@ -25,7 +25,7 @@ setupConfig() {
 initialRecord() {
     # Credits to stackexchange user Mikel
     # Link: https://unix.stackexchange.com/questions/9496/looping-through-files-with-spaces-in-the-names
-    # Stores the current value of the internal field seperator
+    # Stores the current value of the internal field seperator to help to deal with file names that have spaces.
     OIFS="$IFS"
     # Uses the newline IFS to process files with spaces 
     IFS=$'\n'
