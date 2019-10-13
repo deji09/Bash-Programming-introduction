@@ -5,8 +5,18 @@ version=0.0
 # Variables to set user arguments for debugging
 # $1 = -c
 
+# Changes to the absolute path of the script, makes importing other scripts easier
+absolutePath() {
+    # Stores the current path the user is in
+    userPath=$(pwd)
+    # Changes to the absolute path of the script
+    trackproPath=`dirname "$0"`
+    trackproPath=`( cd "$trackproPath" && pwd )`
+}
+
 # Sets the configuration path and imports its variables
 setConfigPath() {
+    # Sets variables for different potential configuration paths
     local localConfigPath=$HOME/.trackpro/trackpro.conf
     local globalConfigPath=/etc/trackpro.conf
     local sourceConfigPath=$trackproPath/config/trackpro.conf
@@ -24,6 +34,66 @@ setConfigPath() {
         configPath=$sourceConfigPath
     else
         echo "Error: No valid configuration file found"
+    fi
+}
+
+# Used to get a repository's path from its name
+getRepoPath() {
+    # Goes to the user's path
+    cd $userPath
+    # Sets target to null if the target has not been set by the loop below
+    # This happens if the repository doesn't exist in either the trackpro configuration
+    # or as a path
+    target=null
+    # Loops through every known repository
+    for i in ${repoPaths[@]}; do
+        # Loads all the variables from the repository configuaration file
+        source $i/.trackpro/repo.conf;
+        # Checks if we've found the repository with the appropriate name
+        if [ "$1" == "$name" ]; then
+            # Stores the repository's path at target
+            target=$i
+        # Checks if the user has typed a path equivalent to a repository
+        elif [ "$1" -ef "$i" ]; then
+            # Stores the repository's path at target
+            target=$i
+        fi
+    done
+    # Changes back to the path of this script
+    cd $trackproPath
+}
+
+# Interprets whether the user has put in a short form or long form argument
+# also interprets the target which will become the path to the user's repository
+configureArgs() {
+    # Checks if the user hasn't entered an argument at all
+    if [ "$1" == "" ]; then
+        echo "Error: Option argument required"
+        # Displays the help screen
+        source $trackproPath/scripts/help.sh;
+    # Checks if the user has entered a long form argument and sets variables appropriately
+    elif [[ "$1" == *"--"* ]]; then
+        short=false
+        long=true
+    # Checks if the user has entered a short form argument and sets variables appropriately
+    elif [[ "$1" == *"-"* ]]; then
+        short=true
+        long=false
+    # Otherwise will set both variables to false
+    else
+        short=false
+        long=false
+    fi
+
+    # Checks if a user has entered an argument for the target (repository name or path)
+    if [ "$2" == "" ]; then
+        target=null
+    # Checks if the user wants to do something to all repositories 
+    elif [ "$2" == "all" ]; then
+        target=all
+    else
+        # Sets a target based on finding the repository's name in its path
+        getRepoPath $2
     fi
 }
 
@@ -66,6 +136,7 @@ longForm() {
 
 # Interprets first shorthand argument
 shortForm() {
+    # Used to automatically interpret arguments
     while getopts "chmlstu" opt; do
         case ${opt} in
             c )
@@ -102,56 +173,27 @@ shortForm() {
     done
 }
 
-# Changes to the absolute path of the script, makes importing other scripts easier
-absolutePath() {
-    trackproPath=`dirname "$0"`
-    trackproPath=`( cd "$trackproPath" && pwd )`
-}
-
-configureArgs() {
-    #
-    if [ "$1" == "" ]; then
-        echo "Error: Option argument required"
-        source $trackproPath/scripts/help.sh;
-    elif [[ "$1" == *"--"* ]]; then
-        short=false
-        long=true
-    elif [[ "$1" == *"-"* ]]; then
-        short=true
-        long=false
-    else
-        short=false
-        long=false
-    fi
-    #
-    if [ "$2" == "" ]; then
-        target=null
-    else
-        target=$2
-    fi
-}
-
 main() {
     # Displays the welcome message
     echo "Welcome to trackpro (version $version)"
-    #
+    # Changes to the absolute path of the script, makes importing other scripts easier
     absolutePath
     # Sets the configuration file and imports its variables
     setConfigPath
-    #
+    # Checks the users first argument for correct syntax and interprets the target
     configureArgs $1 $2
     if [ "$long" == "true" ]; then
-        #
+        # Interprets the user's long form argument
         longForm $1
     elif [ "$short" == "true" ]; then
-        #
+        # Interprets the user's short form argument
         shortForm $1
     else
         echo "Error: illegal option -$1"
+        # Displays the help file
         source $trackproPath/scripts/help.sh;
     fi
 }
 
+# Runs the main program
 main $1 $2
-
-
