@@ -68,8 +68,7 @@ getRepoPath() {
 }
 
 # Interprets whether the user has put in a short form or long form argument
-# also interprets the target which will become the path to the user's repository
-configureArgs() {
+interpretOption() {
     # Checks if the user hasn't entered an argument at all
     if [ "$1" == "" ]; then
         echo "Error: Option argument required"
@@ -88,16 +87,19 @@ configureArgs() {
         short=false
         long=false
     fi
+}
 
+# Interprets the target which will become the path to the user's repository
+interpretTarget() {
     # Checks if a user has entered an argument for the target (repository name or path)
-    if [ "$2" == "" ]; then
+    if [ "$1" == "" ]; then
         target=null
     # Checks if the user wants to do something to all repositories 
-    elif [ "$2" == "all" ]; then
+    elif [ "$1" == "all" ]; then
         target=all
     else
         # Sets a target based on finding the repository's name in its path
-        getRepoPath $2
+        getRepoPath $1
     fi
 }
 
@@ -206,10 +208,13 @@ main() {
     echo "Welcome to trackpro (version $version)"
     # Changes to the absolute path of the script, makes importing other scripts easier
     absolutePath
-    # Sets the configuration file and imports its variables and sets the log file
     setConfigAndLogPath
-    # Checks the users first argument for correct syntax and interprets the target
-    configureArgs $1 $2
+    # Sets the configuration file and imports its variables and sets the log file
+    # Checks the users first argument for correct syntax and to determine if there's likely
+    interpretOption $1 
+    # to be short or long input
+    # Interprets the target which will become the path to the user's repository
+    interpretTarget $2
     if [ "$long" == "true" ]; then
         # Interprets the user's long form argument
         longForm $1 $2
