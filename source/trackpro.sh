@@ -15,25 +15,29 @@ absolutePath() {
 }
 
 # Sets the configuration path and imports its variables
-setConfigPath() {
+setConfigAndLogPath() {
     # Sets variables for different potential configuration paths
     local localConfigPath=$HOME/.trackpro/trackpro.conf
     local globalConfigPath=/etc/trackpro.conf
     local sourceConfigPath=$trackproPath/config/trackpro.conf
-    # If there's a local configuration file import it
+    # If there's a local configuration file
     if [ -f "$localConfigPath" ]; then
         # Gets the variables from the configuration file
         source $localConfigPath
         # Sets the configuration path
         configPath=$localConfigPath
+        # Sets the log path
+        logPath=$HOME/.trackpro/trackpro.log
     elif [ -f "$globalConfigPath" ]; then
         source $globalConfigPath
         configPath=$globalConfigPath
+        logPath=/var/log/trackpro.log
     elif [ -f "$sourceConfigPath" ]; then
         source $sourceConfigPath
         configPath=$sourceConfigPath
+        logPath=$trackproPath/trackpro.log
     else
-        echo "Error: No valid configuration file found"
+        echo "Error: No configuration file found"
     fi
 }
 
@@ -100,6 +104,10 @@ configureArgs() {
 # Interprets first longform argument
 longForm() {
     case "$1" in
+        "--accessfilerepo")
+            echo accessfilerepo
+            source $trackproPath/scripts/accessfilerepo.sh $target
+        ;;
         "--changesettings")
             echo changesettings
             source $trackproPath/scripts/changesettings.sh $configPath
@@ -132,6 +140,10 @@ longForm() {
             echo undochange
             source $trackproPath/scripts/undochange.sh $target $configPath;
         ;;
+        "--view")
+            echo view
+            ls -R $target
+        ;;
         * )
             echo "Error: illegal option -$1"
             source $trackproPath/scripts/help.sh;
@@ -141,8 +153,12 @@ longForm() {
 # Interprets first shorthand argument
 shortForm() {
     # Used to automatically interpret arguments
-    while getopts "chimlstu" opt; do
+    while getopts "achimlstuv" opt; do
         case ${opt} in
+            a )
+                echo accessfilerepo
+                source $trackproPath/scripts/accessfilerepo.sh $target
+            ;;
             c )
                 echo changesettings
                 source $trackproPath/scripts/changesettings.sh $configPath
@@ -175,6 +191,10 @@ shortForm() {
                 echo undochange
                 source $trackproPath/scripts/undochange.sh $target $configPath;
             ;;
+            v )
+                echo view
+                ls -R $target
+            ;;
             * )
                 source $trackproPath/scripts/help.sh;
         esac
@@ -186,8 +206,8 @@ main() {
     echo "Welcome to trackpro (version $version)"
     # Changes to the absolute path of the script, makes importing other scripts easier
     absolutePath
-    # Sets the configuration file and imports its variables
-    setConfigPath
+    # Sets the configuration file and imports its variables and sets the log file
+    setConfigAndLogPath
     # Checks the users first argument for correct syntax and interprets the target
     configureArgs $1 $2
     if [ "$long" == "true" ]; then

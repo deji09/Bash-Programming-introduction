@@ -1,3 +1,5 @@
 #!bin/bash
-#
-echo "What file repo do you want to access?";read input;path=$(find -name $input -type d);cd $path;
+# Allows the user to access a repository by changing into it
+
+cd $1
+exec $SHELL
