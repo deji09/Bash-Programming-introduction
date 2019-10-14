@@ -108,9 +108,13 @@ longForm() {
             echo displayhelp;
             source $trackproPath/scripts/help.sh;
         ;;
+        "--importrepo" )
+            echo importrepo
+            source $trackproPath/scripts/importrepo.sh $2 $configPath $userPath
+        ;;
         "--makerepo")
             echo makerepo
-            source $trackproPath/scripts/makerepo.sh $target $configPath;
+            source $trackproPath/scripts/makerepo.sh $2 $configPath;
         ;;
         "--listrepos")
             echo listrepos
@@ -137,7 +141,7 @@ longForm() {
 # Interprets first shorthand argument
 shortForm() {
     # Used to automatically interpret arguments
-    while getopts "chmlstu" opt; do
+    while getopts "chimlstu" opt; do
         case ${opt} in
             c )
                 echo changesettings
@@ -147,9 +151,13 @@ shortForm() {
                 echo displayhelp;
                 source $trackproPath/scripts/help.sh;
             ;;
+            i )
+                echo importrepo
+                source $trackproPath/scripts/importrepo.sh $2 $configPath $userPath
+            ;;
             m )
                 echo makerepo
-                source $trackproPath/scripts/makerepo.sh $target $configPath;
+                source $trackproPath/scripts/makerepo.sh $2 $configPath;
             ;;
             l )
                 echo listrepos
@@ -184,10 +192,10 @@ main() {
     configureArgs $1 $2
     if [ "$long" == "true" ]; then
         # Interprets the user's long form argument
-        longForm $1
+        longForm $1 $2
     elif [ "$short" == "true" ]; then
         # Interprets the user's short form argument
-        shortForm $1
+        shortForm $1 $2
     else
         echo "Error: illegal option -$1"
         # Displays the help file
