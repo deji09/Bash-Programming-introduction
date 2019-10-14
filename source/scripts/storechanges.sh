@@ -57,12 +57,21 @@ Store() {
     IFS=$'\n'
     #
     mkdir ./.trackpro/$time
+    read -p'Type yes to commit your changes ' choice 
+    if [ "$choice" == "yes" ]
+        then 
+            echo "Please enter your commits into the file:"
+            read commits
+        fi
     # Loops through every file in the repository excluding the .trackpro folder
     find . -type f -name "*" ! -path "./.trackpro/*" -print0 | while IFS= read -r -d '' file; do
         # Adds the file to the changes configuration record
         echo -e ":$user:$time:$file:" >> ./.trackpro/changes.conf 
         fileCut=`echo $file | cut -c 3-`
-        diff $latestStore/$fileCut $file> ./.trackpro/$time/$fileCut
+        latecut=`echo $latestStore | cut -c -22`
+        echo  $commits
+        echo "Commit Section" $commits " end ">>./.trackpro/$time/$fileCut
+        diff $latecut/$fileCut $file>>./.trackpro/$time/$fileCut
     done
     # Resores the original IFS
     IFS="$OIFS"
