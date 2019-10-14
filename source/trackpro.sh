@@ -208,11 +208,11 @@ main() {
     echo "Welcome to trackpro (version $version)"
     # Changes to the absolute path of the script, makes importing other scripts easier
     absolutePath
-    setConfigAndLogPath
     # Sets the configuration file and imports its variables and sets the log file
+    setConfigAndLogPath
     # Checks the users first argument for correct syntax and to determine if there's likely
-    interpretOption $1 
     # to be short or long input
+    interpretOption $1 
     # Interprets the target which will become the path to the user's repository
     interpretTarget $2
     if [ "$long" == "true" ]; then
