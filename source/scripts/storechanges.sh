@@ -57,7 +57,7 @@ Store() {
     IFS=$'\n'
     #
     mkdir ./.trackpro/$time
-    read -p'Type yes to commit your changes ' choice 
+    read -p'Type yes to commit your changes, type anything else to decline your changes ' choice 
     if [ "$choice" == "yes" ]
         then 
             echo "Please enter your commits into the file:"
@@ -69,8 +69,8 @@ Store() {
         echo -e ":$user:$time:$file:" >> ./.trackpro/changes.conf 
         fileCut=`echo $file | cut -c 3-`
         latecut=`echo $latestStore | cut -c -22`
-        echo  $commits
-        echo "Commit Section" $commits " end ">>./.trackpro/$time/$fileCut
+        echo -e " [Commit Section] \n" $commits " \n [end] ">>./.trackpro/$time/$fileCut
+        echo "\n" >>./.trackpro/$time/$fileCut
         diff $latecut/$fileCut $file>>./.trackpro/$time/$fileCut
     done
     # Resores the original IFS
