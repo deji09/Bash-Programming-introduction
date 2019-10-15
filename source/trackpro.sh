@@ -15,25 +15,29 @@ absolutePath() {
 }
 
 # Sets the configuration path and imports its variables
-setConfigPath() {
+setConfigAndLogPath() {
     # Sets variables for different potential configuration paths
     local localConfigPath=$HOME/.trackpro/trackpro.conf
     local globalConfigPath=/etc/trackpro.conf
     local sourceConfigPath=$trackproPath/config/trackpro.conf
-    # If there's a local configuration file import it
+    # If there's a local configuration file
     if [ -f "$localConfigPath" ]; then
         # Gets the variables from the configuration file
         source $localConfigPath
         # Sets the configuration path
         configPath=$localConfigPath
+        # Sets the log path
+        logPath=$HOME/.trackpro/trackpro.log
     elif [ -f "$globalConfigPath" ]; then
         source $globalConfigPath
         configPath=$globalConfigPath
+        logPath=/var/log/trackpro.log
     elif [ -f "$sourceConfigPath" ]; then
         source $sourceConfigPath
         configPath=$sourceConfigPath
+        logPath=$trackproPath/trackpro.log
     else
-        echo "Error: No valid configuration file found"
+        echo "Error: No configuration file found"
     fi
 }
 
@@ -64,8 +68,7 @@ getRepoPath() {
 }
 
 # Interprets whether the user has put in a short form or long form argument
-# also interprets the target which will become the path to the user's repository
-configureArgs() {
+interpretOption() {
     # Checks if the user hasn't entered an argument at all
     if [ "$1" == "" ]; then
         echo "Error: Option argument required"
@@ -84,22 +87,29 @@ configureArgs() {
         short=false
         long=false
     fi
+}
 
+# Interprets the target which will become the path to the user's repository
+interpretTarget() {
     # Checks if a user has entered an argument for the target (repository name or path)
-    if [ "$2" == "" ]; then
+    if [ "$1" == "" ]; then
         target=null
     # Checks if the user wants to do something to all repositories 
-    elif [ "$2" == "all" ]; then
+    elif [ "$1" == "all" ]; then
         target=all
     else
         # Sets a target based on finding the repository's name in its path
-        getRepoPath $2
+        getRepoPath $1
     fi
 }
 
 # Interprets first longform argument
 longForm() {
     case "$1" in
+        "--accessfilerepo")
+            echo accessfilerepo
+            source $trackproPath/scripts/accessfilerepo.sh $target
+        ;;
         "--changesettings")
             echo changesettings
             source $trackproPath/scripts/changesettings.sh $configPath
@@ -108,9 +118,13 @@ longForm() {
             echo displayhelp;
             source $trackproPath/scripts/help.sh;
         ;;
+        "--importrepo" )
+            echo importrepo
+            source $trackproPath/scripts/importrepo.sh $2 $configPath $userPath
+        ;;
         "--makerepo")
             echo makerepo
-            source $trackproPath/scripts/makerepo.sh $target $configPath;
+            source $trackproPath/scripts/makerepo.sh $2 $configPath;
         ;;
         "--listrepos")
             echo listrepos
@@ -128,6 +142,10 @@ longForm() {
             echo undochange
             source $trackproPath/scripts/undochange.sh $target $configPath;
         ;;
+        "--view")
+            echo view
+            ls -R $target
+        ;;
         * )
             echo "Error: illegal option -$1"
             source $trackproPath/scripts/help.sh;
@@ -137,8 +155,12 @@ longForm() {
 # Interprets first shorthand argument
 shortForm() {
     # Used to automatically interpret arguments
-    while getopts "chmlstu" opt; do
+    while getopts "achimlstuv" opt; do
         case ${opt} in
+            a )
+                echo accessfilerepo
+                source $trackproPath/scripts/accessfilerepo.sh $target
+            ;;
             c )
                 echo changesettings
                 source $trackproPath/scripts/changesettings.sh $configPath
@@ -147,9 +169,13 @@ shortForm() {
                 echo displayhelp;
                 source $trackproPath/scripts/help.sh;
             ;;
+            i )
+                echo importrepo
+                source $trackproPath/scripts/importrepo.sh $2 $configPath $userPath
+            ;;
             m )
                 echo makerepo
-                source $trackproPath/scripts/makerepo.sh $target $configPath;
+                source $trackproPath/scripts/makerepo.sh $2 $configPath;
             ;;
             l )
                 echo listrepos
@@ -167,6 +193,10 @@ shortForm() {
                 echo undochange
                 source $trackproPath/scripts/undochange.sh $target $configPath;
             ;;
+            v )
+                echo view
+                ls -R $target
+            ;;
             * )
                 source $trackproPath/scripts/help.sh;
         esac
@@ -178,16 +208,19 @@ main() {
     echo "Welcome to trackpro (version $version)"
     # Changes to the absolute path of the script, makes importing other scripts easier
     absolutePath
-    # Sets the configuration file and imports its variables
-    setConfigPath
-    # Checks the users first argument for correct syntax and interprets the target
-    configureArgs $1 $2
+    # Sets the configuration file and imports its variables and sets the log file
+    setConfigAndLogPath
+    # Checks the users first argument for correct syntax and to determine if there's likely
+    # to be short or long input
+    interpretOption $1 
+    # Interprets the target which will become the path to the user's repository
+    interpretTarget $2
     if [ "$long" == "true" ]; then
         # Interprets the user's long form argument
-        longForm $1
+        longForm $1 $2
     elif [ "$short" == "true" ]; then
         # Interprets the user's short form argument
-        shortForm $1
+        shortForm $1 $2
     else
         echo "Error: illegal option -$1"
         # Displays the help file

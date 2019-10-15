@@ -17,8 +17,9 @@ install() {
     cp -v ./source/trackpro.sh $installPath/trackpro
     # Copies the additional scripts
     cp -vr ./source/scripts $installPath
-    # Checks if there's already a configuaration file
-    if [ ! -f $configPath ]; then
+    # Checks if there's already a configuaration file or 
+    # if the deep option has been selected which overwrites it
+    if [ ! -f $configPath ] || [ "$option_1" == "--deep" ]; then
         # Copies the main configuration file
         cp -v ./source/config/trackpro.conf $configPath
     fi
@@ -80,6 +81,9 @@ echo "Welcome to the trackpro installer"
 echo "With this installer there are two types of installation"
 echo "For more information please read the README file on Github"
 echo "Please select your preferred option:"
+
+# Used to determine whether to overwrite the trackpro configuration file
+option_1=$1
 
 # Credits to askubuntu user Dennis Williamson
 # Link: https://askubuntu.com/questions/1705/how-can-i-create-a-select-menu-in-a-shell-script 
