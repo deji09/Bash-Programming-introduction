@@ -167,6 +167,7 @@ main() {
     interpretOption $1
     # Interprets the target which will become the path to the user's repository
     interpretTarget $2
+    # Runs the user's desired option and starts up any appropriate external scripts
     runOption $1 $2
 }
 
