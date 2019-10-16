@@ -7,6 +7,7 @@ repoPaths=$2
 # Stores the user being used
 user="$(whoami)"
 time=$(date +%s)
+now=$(date)
 
 # currentRepoPath=/home/ayodejishote/Desktop/trackpro/repo-scripts
 # currentRepoPath=../repo-scripts
@@ -64,7 +65,7 @@ Store() {
         then 
             echo "Please enter your  commits into the file:"
             read commits
-            echo -e ":$user:$date:">>./.trackpro/Commits.conf
+            echo -e ":$user:$now:">>./.trackpro/Commits.conf
             echo -e " [Commit Section] \n" $commits " \n [end] ">>./.trackpro/Commits.conf
         fi
     # Loops through every file in the repository excluding the .trackpro folder
