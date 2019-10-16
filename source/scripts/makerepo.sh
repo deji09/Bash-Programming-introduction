@@ -1,4 +1,4 @@
-#!/bin/bash
+#/bin/bash
 # Creates a repository
 # Stores the repository name or path we are trying to create
 target=$1
@@ -19,6 +19,8 @@ setupConfig() {
     echo -e "name=$(basename $target)" >> ./.trackpro/repo.conf
     # Adds the time created to the repo's configuration file
     echo -e "created=$time"  >> ./.trackpro/repo.conf
+    
+    
 }
 
 # Stores the changes of all the non-trackpro related files as an initial record
