@@ -8,6 +8,7 @@ repoPaths=$2
 user="$(whoami)"
 time=$(date +%s)
 now=$(date)
+
 # Changes into the repository
 cd $currentRepoPath
 
@@ -45,13 +46,14 @@ Store() {
     echo "Edits stored under " $user "'s username"
     #
     mkdir ./.trackpro/$time
-    read -p'Type yes or Y to commit your changes, type anything else to decline writing commits ' choice
-    if [ "$choice" == "yes" ] || [ "$choice" == "Y" ]; then
-        echo "Please enter your  commits into the file:"
-        read commits
-        echo -e ":$user:$now:">>./.trackpro/Commits.conf
-        echo -e " [Commit Section] \n" $commits " \n [end] ">>./.trackpro/Commits.conf
-    fi
+    read -p'Type yes or Y to commit your changes, type anything else to decline writing commits ' choice 
+    if [ "$choice" == "yes" ] || [ "$choice" == "Y" ]
+        then 
+            echo "Please enter your  commits into the file:"
+            read commits
+            echo -e ":$user:$now:">>./.trackpro/Commits.conf
+            echo -e " [Commit Section] \n" $commits " \n [end] ">>./.trackpro/Commits.conf
+        fi
     # Loops through every file in the repository excluding the .trackpro folder
     find . -type f -name "*" ! -path "./.trackpro/*" -print0 | while IFS= read -r -d '' file; do
         # Adds the file to the changes configuration record
