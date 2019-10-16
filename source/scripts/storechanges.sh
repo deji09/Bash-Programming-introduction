@@ -8,58 +8,50 @@ repoPaths=$2
 user="$(whoami)"
 time=$(date +%s)
 now=$(date)
+<<<<<<< HEAD
 
 # currentRepoPath=/home/ayodejishote/Desktop/trackpro/repo-scripts
 # currentRepoPath=../repo-scripts
+=======
+# Changes into the repository
+>>>>>>> master
 cd $currentRepoPath
-#currentRepoPath=/home/max/Documents/Github/trackpro/repo-scripts
 
-# echo "Welcome to the file change tracker (version $version)"
+setIFS() {
+    # Credits to stackexchange user Mikel
+    # Link: https://unix.stackexchange.com/questions/9496/looping-through-files-with-spaces-in-the-names
+    # Stores the current value of the internal field seperator
+    OIFS="$IFS"
+    # Adds the time created to the repo's configuration file
+    # Uses the newline IFS to process files with spaces
+    IFS=$'\n'
+}
 
-# echo filedifference
-# What are the files that you  would like to see their differences
-
-# read -p 'file 1: ' file1
-
-# read -p 'file 2: ' file2
-# echo " What user is making this repository "
-# read -p ' User: ' user1
-
-
-# echo "The files your checking are" eat "and" cow
-# if [ -e $eat ] && [ -e $cow ]
-# then
-#     echo " These files  exist "
-#     sort <eat>eat.sorted
-#     sort <cow>cow.sorted
-#     date> differences | comm -23 eat.sorted cow.sorted > differences
-#     cat differences
-# else
-#     echo " These files dont exist "
-# fi
 identifyLatestStore() {
-    pwd
     cd ./.trackpro
-    local folders=$(ls -d -- */)
+    pwd
+    declare -a folders
+
+    while IFS= read -r -d '' file; do
+        folders+=($file)
+        # echo $file
+        # echo "${folders[@]}"
+    done < <(find . -type d -name "*" -print0)
+
+    # echo "${folders[@]}"
     declare -i foldersLength=${#folders[@]}
     # echo $foldersLength
-    latestStore=./.trackpro/${folders[$((foldersLength-1))]}
-    # echo $latestStore
+    lateCut=`echo ${folders[$((foldersLength-1))]} | cut -c 3-`
+    latestStore=./.trackpro/$lateCut
 }
 
 Store() {
     echo $currentRepoPath
     cd $currentRepoPath
     echo "Edits stored under " $user "'s username"
-    # Credits to stackexchange user Mikel
-    # Link: https://unix.stackexchange.com/questions/9496/looping-through-files-with-spaces-in-the-names
-    # Stores the current value of the internal field seperator
-    OIFS="$IFS"
-    # Adds the time created to the repo's configuration file
-    # Uses the newline IFS to process files with spaces 
-    IFS=$'\n'
     #
     mkdir ./.trackpro/$time
+<<<<<<< HEAD
     read -p'Type yes or Y to commit your changes, type anything else to decline writing commits ' choice 
     if [ "$choice" == "yes" ] || [ "$choice" == "Y" ]
         then 
@@ -68,22 +60,32 @@ Store() {
             echo -e ":$user:$now:">>./.trackpro/Commits.conf
             echo -e " [Commit Section] \n" $commits " \n [end] ">>./.trackpro/Commits.conf
         fi
+=======
+    read -p'Type yes or Y to commit your changes, type anything else to decline writing commits ' choice
+    if [ "$choice" == "yes" ] || [ "$choice" == "Y" ]; then
+        echo "Please enter your  commits into the file:"
+        read commits
+        echo -e ":$user:$now:">>./.trackpro/Commits.conf
+        echo -e " [Commit Section] \n" $commits " \n [end] ">>./.trackpro/Commits.conf
+    fi
+>>>>>>> master
     # Loops through every file in the repository excluding the .trackpro folder
     find . -type f -name "*" ! -path "./.trackpro/*" -print0 | while IFS= read -r -d '' file; do
         # Adds the file to the changes configuration record
-        echo -e ":$user:$time:$file:" >> ./.trackpro/changes.conf 
+        echo -e ":$user:$time:$file:" >> ./.trackpro/changes.conf
         fileCut=`echo $file | cut -c 3-`
         latecut=`echo $latestStore | cut -c -22`
-        if [ -e "$latecut/$fileCut" ]
-        then
-        diff $latecut/$fileCut $file>>./.trackpro/$time/$fileCut
+        if [ -e "$latecut/$fileCut" ]; then
+            diff $latecut/$fileCut $file>>./.trackpro/$time/$fileCut
         else
-        cp -p $file $latecut/$fileCut
+            cp -p $file $latecut/$fileCut
         fi
     done
     # Resores the original IFS
     IFS="$OIFS"
 }
 
+setIFS
 identifyLatestStore
 Store
+IFS=$OIFS
