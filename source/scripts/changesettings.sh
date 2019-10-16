@@ -42,9 +42,9 @@ do
             editor
             break
         ;;
-        "Change repository name")
-            echo "Repository name"
-            break
+        # "Change repository name")
+        #     echo "Repository name"
+        #     break
         "Exit")
             break
         ;;
