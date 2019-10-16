@@ -47,21 +47,25 @@ identifyLatestStore() {
 }
 
 Store() {
+    echo $currentRepoPath
     cd $currentRepoPath
     echo "Edits stored under " $user "'s username"
     # Credits to stackexchange user Mikel
     # Link: https://unix.stackexchange.com/questions/9496/looping-through-files-with-spaces-in-the-names
     # Stores the current value of the internal field seperator
     OIFS="$IFS"
+    # Adds the time created to the repo's configuration file
     # Uses the newline IFS to process files with spaces 
     IFS=$'\n'
     #
     mkdir ./.trackpro/$time
-    read -p'Type yes to commit your changes, type anything else to decline your changes ' choice 
-    if [ "$choice" == "yes" ]
+    read -p'Type yes or Y to commit your changes, type anything else to decline writing commits ' choice 
+    if [ "$choice" == "yes" ] || [ "$choice" == "Y" ]
         then 
-            echo "Please enter your commits into the file:"
+            echo "Please enter your  commits into the file:"
             read commits
+            echo -e ":$user:$date:">>./.trackpro/Commits.conf
+            echo -e " [Commit Section] \n" $commits " \n [end] ">>./.trackpro/Commits.conf
         fi
     # Loops through every file in the repository excluding the .trackpro folder
     find . -type f -name "*" ! -path "./.trackpro/*" -print0 | while IFS= read -r -d '' file; do
@@ -69,9 +73,12 @@ Store() {
         echo -e ":$user:$time:$file:" >> ./.trackpro/changes.conf 
         fileCut=`echo $file | cut -c 3-`
         latecut=`echo $latestStore | cut -c -22`
-        echo -e " [Commit Section] \n" $commits " \n [end] ">>./.trackpro/$time/$fileCut
-        echo "\n" >>./.trackpro/$time/$fileCut
+        if [ -e "$latecut/$fileCut" ]
+        then
         diff $latecut/$fileCut $file>>./.trackpro/$time/$fileCut
+        else
+        cp -p $file $latecut/$fileCut
+        fi
     done
     # Resores the original IFS
     IFS="$OIFS"
