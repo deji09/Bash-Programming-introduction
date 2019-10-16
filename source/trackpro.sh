@@ -92,7 +92,7 @@ interpretTarget() {
     if [ "$1" == "" ]; then
         target=null
         # Checks if the user wants to do something to all repositories
-        elif [ "$1" == "all" ]; then
+    elif [ "$1" == "all" ]; then
         target=all
     else
         # Sets a target based on finding the repository's name in its path
@@ -100,12 +100,12 @@ interpretTarget() {
     fi
 }
 
-# 
+#
 runOption() {
     # Stores the user's argument for the option as userArg
     userArg=$1
     # Stores the user's argument for the target as userTarget
-    # As opposed to target this has not been interpreted by the program 
+    # As opposed to target this has not been interpreted by the program
     # which is useful for some methods
     userTarget=$2
     case "$userArg" in
@@ -116,6 +116,10 @@ runOption() {
         "-c" | "--changesettings")
             echo changesettings
             source $trackproPath/scripts/changesettings.sh $configPath
+        ;;
+        "-e" | "--edit")
+            echo editconfigs
+            source $trackproPath/scripts/editconfigs.sh $configPath
         ;;
         "-h" | "--help")
             echo help;

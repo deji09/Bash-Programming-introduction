@@ -54,6 +54,7 @@ trackpro [options] [target]
 | --- | --- | --- |
 | -a | --access | Changes the terminal's directory |
 | -c | --changesettings | Used to change settings for each user, all users and for each repository |
+| -e | --edit | Allows the user to edit trackpro configuration files |
 | -h | --help | Displays this help screen |
 | -i | --import | Imports a trackpro respository from a different computer |
 | -m | --make | Makes a trackpro repository |

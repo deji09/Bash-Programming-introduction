@@ -35,7 +35,7 @@ repoName() {
     #
     while [ "$found" == "false" ]; do
         # Reads input from the user
-        read -p "What repoistory would you like to change the name of? " repoInput
+        read -p "What repository would you like to change the name of? " repoInput
         #
         for i in ${repoPaths[@]}; do
             repoConfigPath=$i/.trackpro/repo.conf
