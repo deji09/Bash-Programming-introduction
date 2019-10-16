@@ -104,6 +104,10 @@ interpretTarget() {
 runOption() {
     # Stores the user's argument for the option as userArg
     userArg=$1
+    # Stores the user's argument for the target as userTarget
+    # As opposed to target this has not been interpreted by the program 
+    # which is useful for some methods
+    userTarget=$2
     case "$userArg" in
         "-a" | "--access")
             echo access
@@ -119,11 +123,11 @@ runOption() {
         ;;
         "-i" | "--import")
             echo import
-            source $trackproPath/scripts/importrepo.sh $2 $configPath $userPath
+            source $trackproPath/scripts/importrepo.sh $userTarget $configPath $userPath
         ;;
         "-m" | "--make")
             echo make
-            source $trackproPath/scripts/makerepo.sh $2 $configPath;
+            source $trackproPath/scripts/makerepo.sh $userTarget $configPath;
         ;;
         "-l" | "--list")
             echo list
@@ -163,7 +167,7 @@ main() {
     interpretOption $1
     # Interprets the target which will become the path to the user's repository
     interpretTarget $2
-    runOption $1
+    runOption $1 $2
 }
 
 # Runs the main program
