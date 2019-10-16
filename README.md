@@ -36,6 +36,12 @@ To install globally, open up a terminal and run the following command, browse th
 ```bash
 ./install.sh
 ```
+### Installer Options
+
+| Options | Action |
+| --- | --- |
+| --deep | Overwrites configuration file during install | 
+
 ## Howto
 To run the command after installation use the following command structure:
 ```bash
@@ -46,19 +52,22 @@ trackpro [options] [target]
 
 | Shorthand Command | Full Command | Action |
 | --- | --- | --- |
+| -a | --accessfilerepository | Changes the terminal's directory  |
 | -c | --changesettings | Used to change settings for each user, all users and for each repository |
 | -h | --help | Displays this help screen |
+| -i | --importrepo | Imports a trackpro respository from a different computer |
 | -m | --makerepo | Makes a trackpro repository |
 | -l | --listrepos | Lists the trackpro repositories stored in the trackpro configuration file |
 | -s | --storechanges | Stores changes of a trackpro repository |
 | -t | --tar | Compresses a version of a trackpro repository |
 | -u | --undochange | Undoes a change built into a trackpro repository |
+| -v | --view | Displays the list of all files within the repository recursively |
 
 ### Target
 
 | Shorthand Commands | Full commands | Target |
 | --- | --- | --- |
-| -m, -t, -u | --makerepo, --tar, --undochange | Repository name or path |
+| -a, -i, -m, -t, -u, -v | --accessfilerepository, --importrepo, --makerepo, --tar, --undochange, --view | Repository name or path |
 | -s | --storechanges | Repository name, path or all |
 | -c, -h, -l | --changesettings, --help, --listrepos | No target required |
 
