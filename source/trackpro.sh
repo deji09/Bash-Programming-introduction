@@ -74,7 +74,7 @@ getRepoPath() {
     cd $trackproPath
 }
 
-# Interprets whether the user has put in a short form or long form argument
+# Interprets whether the user has put in an option argument
 interpretOption() {
     # Stores the user's argument for the option as userArg
     userArg=$1
@@ -83,18 +83,6 @@ interpretOption() {
         echo "Error: Option argument required"
         # Displays the help screen
         source $trackproPath/scripts/help.sh;
-    #     # Checks if the user has entered a long form argument and sets variables appropriately
-    #     elif [[ "$userArg" == *"--"* ]]; then
-    #     short=false
-    #     long=true
-    #     # Checks if the user has entered a short form argument and sets variables appropriately
-    #     elif [[ "$userArg" == *"-"* ]]; then
-    #     short=true
-    #     long=false
-    #     # Otherwise will set both variables to false
-    # else
-    #     short=false
-    #     long=false
     fi
 }
 
@@ -163,106 +151,6 @@ runOption() {
     esac
 }
 
-# Interprets first longform argument
-# longForm() {
-#     case "$1" in
-#         "--access")
-#             echo access
-#             source $trackproPath/scripts/accessfilerepo.sh $target
-#         ;;
-#         "--changesettings")
-#             echo changesettings
-#             source $trackproPath/scripts/changesettings.sh $configPath
-#         ;;
-#         "--help")
-#             echo help;
-#             source $trackproPath/scripts/help.sh;
-#         ;;
-#         "--import" )
-#             echo import
-#             source $trackproPath/scripts/importrepo.sh $2 $configPath $userPath
-#         ;;
-#         "--make")
-#             echo make
-#             source $trackproPath/scripts/makerepo.sh $2 $configPath;
-#         ;;
-#         "--list")
-#             echo list
-#             source $trackproPath/scripts/listrepos.sh $repoPaths;
-#         ;;
-#         "--store")
-#             echo store
-#             source $trackproPath/scripts/storechanges.sh $target $repoPaths;
-#         ;;
-#         "--tar")
-#             echo tar
-#             source $trackproPath/scripts/tar.sh $target $configPath;
-#         ;;
-#         "--undo")
-#             echo undo
-#             source $trackproPath/scripts/undochange.sh $target $configPath;
-#         ;;
-#         "--view")
-#             echo view
-#             ls -R $target
-#         ;;
-#         * )
-#             echo "Error: illegal option -$1"
-#             source $trackproPath/scripts/help.sh;
-#     esac
-# }
-
-# # Interprets first shorthand argument
-# shortForm() {
-#     # Used to automatically interpret arguments
-#     while getopts "achimlstuv" opt; do
-#         case ${opt} in
-#             a )
-#                 echo accessfilerepo
-#                 source $trackproPath/scripts/accessfilerepo.sh $target
-#             ;;
-#             c )
-#                 echo changesettings
-#                 source $trackproPath/scripts/changesettings.sh $configPath
-#             ;;
-#             h )
-#                 echo displayhelp;
-#                 source $trackproPath/scripts/help.sh;
-#             ;;
-#             i )
-#                 echo importrepo
-#                 source $trackproPath/scripts/importrepo.sh $2 $configPath $userPath
-#             ;;
-#             m )
-#                 echo makerepo
-#                 source $trackproPath/scripts/makerepo.sh $2 $configPath;
-#             ;;
-#             l )
-#                 echo listrepos
-#                 source $trackproPath/scripts/listrepos.sh $repoPaths;
-#             ;;
-#             s )
-#                 echo storechanges
-#                 source $trackproPath/scripts/storechanges.sh $target $repoPaths;
-#             ;;
-#             t )
-#                 echo tar
-#                 source $trackproPath/scripts/tar.sh $target $configPath;
-#             ;;
-#             u )
-#                 echo undochange
-#                 source $trackproPath/scripts/undochange.sh $target $configPath;
-#             ;;
-#             v )
-#                 echo view
-#                 ls -R $target
-#             ;;
-#             * )
-#                 source $trackproPath/scripts/help.sh;
-#         esac
-#     done
-# }
-
 main() {
     # Displays the welcome message
     echo "Welcome to trackpro (version $version)"
@@ -275,17 +163,6 @@ main() {
     interpretOption $1
     # Interprets the target which will become the path to the user's repository
     interpretTarget $2
-    # if [ "$long" == "true" ]; then
-    #     # Interprets the user's long form argument
-    #     longForm $1 $2
-    #     elif [ "$short" == "true" ]; then
-    #     # Interprets the user's short form argument
-    #     shortForm $1 $2
-    # else
-    #     echo "Error: illegal option -$1"
-    #     # Displays the help file
-    #     source $trackproPath/scripts/help.sh;
-    # fi
     runOption $1
 }
 
