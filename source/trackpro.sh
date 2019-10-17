@@ -137,6 +137,10 @@ runOption() {
             echo list
             source $trackproPath/scripts/listrepos.sh $repoPaths;
         ;;
+        "-p" | "--permissions")
+            echo permissions
+            source $trackproPath/scripts/changepermissions.sh $target;
+        ;;
         "-s" | "--store")
             echo store
             source $trackproPath/scripts/storechanges.sh $target $repoPaths;
