@@ -21,7 +21,7 @@ setIFS() {
     # Uses the newline IFS to process files with spaces
     IFS=$'\n'
 }
-
+# This stores the latest version of the file
 identifyLatestStore() {
     cd ./.trackpro
     pwd
@@ -39,12 +39,11 @@ identifyLatestStore() {
     lateCut=`echo ${folders[$((foldersLength-1))]} | cut -c 3-`
     latestStore=./.trackpro/$lateCut
 }
-
+# Method that stores the changes in a file
 Store() {
     echo $currentRepoPath
     cd $currentRepoPath
     echo "Edits stored under " $user "'s username"
-    #
     mkdir ./.trackpro/$time
     touch 2changes.txt
     read -p'Type yes or Y to commit your changes, type anything else to decline writing commits ' choice 
@@ -62,12 +61,13 @@ Store() {
         fileCut=`echo $file | cut -c 3-`
         latecut=`echo $latestStore | cut -c 3-`
         if [ -e "$latecut/$fileCut" ]; then
+        # Removes the symbols > and < in the diff method
         diff $latecut/$fileCut $file | grep '^[->* ]'| tr -d "[:blank:]">>./.trackpro/$time/$fileCut
         sed 's/>//' ./.trackpro/$time/$fileCut>>2changes.txt
         cp 2changes.txt ./.trackpro/$time/$fileCut
-        # grep '^[->*]' ./.trackpro/$time/$fileCut>>./.trackpro/$time/$fileCut
         rm 2changes.txt
         else
+        # if the file is a new file then stores the changes for it too
             cp -p $file $latecut/$fileCut
         fi
     done
