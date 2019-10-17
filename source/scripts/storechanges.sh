@@ -46,6 +46,7 @@ Store() {
     echo "Edits stored under " $user "'s username"
     #
     mkdir ./.trackpro/$time
+    touch 2changes.txt
     read -p'Type yes or Y to commit your changes, type anything else to decline writing commits ' choice 
     if [ "$choice" == "yes" ] || [ "$choice" == "Y" ]
         then 
@@ -59,13 +60,18 @@ Store() {
         # Adds the file to the changes configuration record
         echo -e ":$user:$time:$file:" >> ./.trackpro/changes.conf
         fileCut=`echo $file | cut -c 3-`
-        latecut=`echo $latestStore | cut -c -22`
+        latecut=`echo $latestStore | cut -c 3-`
         if [ -e "$latecut/$fileCut" ]; then
-            diff $latecut/$fileCut $file>>./.trackpro/$time/$fileCut
+        diff $latecut/$fileCut $file | grep '^[->* ]'| tr -d "[:blank:]">>./.trackpro/$time/$fileCut
+        sed 's/>//' ./.trackpro/$time/$fileCut>>2changes.txt
+        cp 2changes.txt ./.trackpro/$time/$fileCut
+        # grep '^[->*]' ./.trackpro/$time/$fileCut>>./.trackpro/$time/$fileCut
+        rm 2changes.txt
         else
             cp -p $file $latecut/$fileCut
         fi
     done
+    rm 2changes.txt
     # Resores the original IFS
     IFS="$OIFS"
 }
