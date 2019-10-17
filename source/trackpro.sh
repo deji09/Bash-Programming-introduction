@@ -91,7 +91,7 @@ interpretTarget() {
     # Checks if a user has entered an argument for the target (repository name or path)
     if [ "$1" == "" ]; then
         target=null
-        # Checks if the user wants to do something to all repositories
+    # Checks if the user wants to do something to all repositories
     elif [ "$1" == "all" ]; then
         target=all
     else
@@ -100,7 +100,7 @@ interpretTarget() {
     fi
 }
 
-#
+# Runs the user's desired option and starts up any appropriate external scripts
 runOption() {
     # Stores the user's argument for the option as userArg
     userArg=$1
@@ -108,6 +108,7 @@ runOption() {
     # As opposed to target this has not been interpreted by the program
     # which is useful for some methods
     userTarget=$2
+    # Runs the appropriate option
     case "$userArg" in
         "-a" | "--access")
             echo access
@@ -122,7 +123,7 @@ runOption() {
             source $trackproPath/scripts/editconfigs.sh $configPath
         ;;
         "-h" | "--help")
-            echo help;
+            echo help
             source $trackproPath/scripts/help.sh;
         ;;
         "-i" | "--import")
@@ -139,7 +140,7 @@ runOption() {
         ;;
         "-s" | "--store")
             echo store
-            source $trackproPath/scripts/storechanges.sh $target $repoPaths;
+            source $trackproPath/scripts/storechanges.sh $target $configPath;
         ;;
         "-t" | "--tar")
             echo tar
@@ -159,6 +160,7 @@ runOption() {
     esac
 }
 
+# Holds the main program, run on launch
 main() {
     # Displays the welcome message
     echo "Welcome to trackpro (version $version)"
