@@ -1,5 +1,6 @@
 #!/bin/bash
 # changes the permissions of every file stored
+# NOT IMPLEMENTED
 
 target=$1 # gets the repo user wants to edit permissions
 
@@ -23,18 +24,18 @@ else
 		fi
 
 		if [[ "$userInput" == "W" ]] || [[ "usertInput" == "w" ]]; then # if user wants to add write permissions
-			chmod -r g+w $repoName # add write permissions to group
-			chomd -r o+w $repoName # add write permissions to other
+			chmod -r g+w $target # add write permissions to group
+			chomd -r o+w $target # add write permissions to other
 		fi
 
 		if [[ "$userInput" == "R" ]] || [[ "$userInput" == "r" ]]; then # if user wants to add read permissions
-			chmod -r g+r $repoName # add read permissions to group
-			chmod -r o+r $repoName # add read permissions to other
+			chmod -r g+r $target # add read permissions to group
+			chmod -r o+r $target # add read permissions to other
 		fi
 
 		if [[ "$userInput" == "X" ]] || [[ "$userInput" == "x" ]]; then # if user wants to add execute permissions
-			chmod -r g+x $repoName # add execute permissions to group
-			chmod -r o+x $repoName # add execute permissions to other
+			chmod -r g+x $target # add execute permissions to group
+			chmod -r o+x $target # add execute permissions to other
 		fi
 	fi
 
@@ -49,18 +50,18 @@ else
 		fi
 
 		if [[ "$userInput2" == "W" ]] || [[ "usertInput" == "w" ]]; then # if user wants to remove write permissions
-			chmod -r g-w $repoName # remove write permissions from group
-			chmod -r o-w $repoName # remove write permissions from other
+			chmod -r g-w $target # remove write permissions from group
+			chmod -r o-w $target # remove write permissions from other
 		fi
 
 		if [[ "$userInput2" == "R" ]] || [[ "$userInput" == "r" ]]; then # if user wants to remove read permissions
-			chmod -r g-r $repoName # remove read permissions from group
-			chmod -r o-r $repoName # remove read permissions from other
+			chmod -r g-r $target # remove read permissions from group
+			chmod -r o-r $target # remove read permissions from other
 		fi
 
 		if [[ "$userInput2" == "X" ]] || [[ "$userInput" == "x" ]]; then # if user wants to remove execute permissions
-			chmod -r g-x $repoName # remove execute permissions from group
-			chmod -r o-x $repoName # remove execute permissions from other
+			chmod -r g-x $target # remove execute permissions from group
+			chmod -r o-x $target # remove execute permissions from other
 		fi
 	fi
 fi
