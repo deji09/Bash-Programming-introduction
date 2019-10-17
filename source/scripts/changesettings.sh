@@ -1,7 +1,7 @@
 #!/bin/bash
 # Changes settings in configuaration files that can be set by the user
 
-# Displays the current global settings to the user 
+# Displays the current global settings to the user
 displayCurrentSettings() {
     echo "Current global settings:"
     echo "Configuration file: $configPath"
@@ -30,7 +30,7 @@ changeStr() {
 # Used to change a variable that is a boolean
 changeBool() {
     echo
-    # Stores the text to prompt the user with, if the variable 
+    # Stores the text to prompt the user with, if the variable
     # we are trying to change is currently true
     local displayStringIfTrue=$1
     # Same only if it's false
@@ -58,7 +58,6 @@ changeBool() {
                 echo -e "$variableToChange=false" >> $fileToChange
             ;;
         esac
-    # Otherwise
     else
         # Asks the user to confirm to change the variable to true
         read -p "$displayStringIfFalse" yn
@@ -76,24 +75,6 @@ changeBool() {
             ;;
         esac
     fi
-}
-
-# Used to find the path from the appropriate repository
-findRepo() {
-    # Runs through all the repositories stored in the configuration file
-    for i in ${repoPaths[@]}; do
-        # Stores the path to a configuration file
-        repoConfigPath=$i/.trackpro/repo.conf
-        # Imports the variables from the current configuration file
-        source $repoConfigPath
-        # Checks if the name of this repository is the one we're trying to find
-        if [ "$name" == "$repoInput" ]; then
-            # Confirms we've found the repository
-            found=true
-            # Breaks the loop since we've found the repository we needed
-            break;
-        fi
-    done
 }
 
 # Used to change the name of a repository
@@ -147,10 +128,10 @@ autoCompile() {
 }
 
 # Displays the menu and processes the options available to the user
+# Credits to askubuntu user Dennis Williamson
+# Link: https://askubuntu.com/questions/1705/how-can-i-create-a-select-menu-in-a-shell-script
+# Prints to the console
 menu() {
-    # Credits to askubuntu user Dennis Williamson
-    # Link: https://askubuntu.com/questions/1705/how-can-i-create-a-select-menu-in-a-shell-script
-    # Prints to the console
     PS3='Please enter your choice: '
     # Defines the options for a user to select
     options=("Default editor" "Change repository name" "Enable/Disable automatic comilation" "Exit")
@@ -191,11 +172,13 @@ main() {
     absolutePath
     # Sets the path to the main trackpro configuration file as imported from the main script
     configPath=$1
-    # Used to locate external scripts 
+    # Used to locate external scripts
     trackproPath=$2
     # Imports the variables from this configuration file
     source $configPath
-    # Displays the current settings 
+    # Imports the findRepo method from an external script
+    source $trackproPath/scripts/findrepo.sh
+    # Displays the current settings
     displayCurrentSettings
     # Displays the menu and processes the options
     menu
