@@ -144,7 +144,7 @@ runOption() {
         ;;
         "-t" | "--tar")
             # Compresses a version of a trackpro repository
-            source $trackproPath/scripts/tar.sh $target $configPath;
+            source $trackproPath/scripts/tar.sh $target $userPath;
         ;;
         "-u" | "--undo")
             # Undoes a change built into a trackpro repository
