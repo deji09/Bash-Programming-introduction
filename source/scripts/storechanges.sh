@@ -40,10 +40,6 @@ identifyLatestStore() {
     # Changes back into the main repository
     cd $currentRepoPath
 }
-# Method that stores the changes in a file
-Store() {
-    echo $currentRepoPath
-    cd $currentRepoPath
 
 # Autocompiles code if a
 autoCompile() {
@@ -85,10 +81,11 @@ perFileStore() {
     fi
 }
 
-#
-store() {
-    echo "Edits stored under " $user "'s username"
+# Method that stores the changes in a file
+Store() {
+    echo $currentRepoPath
     cd $currentRepoPath
+    echo "Edits stored under " $user "'s username"
 
 # Autocompiles code if a
 autoCompile() {
