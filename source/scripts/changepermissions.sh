@@ -3,7 +3,7 @@
 
 target=$1
 
-echo $target
+repoName=$(basename $target)
 
 if [[ "$target" == null ]]; then
 	echo "Error: Invalid Input"
@@ -23,18 +23,18 @@ else
 		fi
 
 		if [[ "$userInput" == "W" ]] || [[ "usertInput" == "w" ]]; then
-			chmod -r g+w $target
-			chomd -r o+w $target
+			chmod -r g+w $repoName
+			chomd -r o+w $repoName
 		fi
 
 		if [[ "$userInput" == "R" ]] || [[ "$userInput" == "r" ]]; then
-			chmod -r g+r $target
-			chmod -r $target o+r
+			chmod -r g+r $repoName
+			chmod -r o+r $repoName
 		fi
 
 		if [[ "$userInput" == "X" ]] || [[ "$userInput" == "x" ]]; then
-			chmod -r g+x $target
-			chmod -r o+x $target
+			chmod -r g+x $repoName
+			chmod -r o+x $repoName
 		fi
 	fi
 
@@ -49,18 +49,18 @@ else
 		fi
 
 		if [[ "$userInput2" == "W" ]] || [[ "usertInput" == "w" ]]; then
-			chmod -r g-w $target
-			chmod -r o-w $target
+			chmod -r g-w $repoName
+			chmod -r o-w $repoName
 		fi
 
 		if [[ "$userInput2" == "R" ]] || [[ "$userInput" == "r" ]]; then
-			chmod -r g-r $target
-			chmod -r o-r $target
+			chmod -r g-r $repoName
+			chmod -r o-r $repoName
 		fi
 
 		if [[ "$userInput2" == "X" ]] || [[ "$userInput" == "x" ]]; then
-			chmod -r g-x $target
-			chmod -r o-x $target
+			chmod -r g-x $repoName
+			chmod -r o-x $repoName
 		fi
 	fi
 fi
