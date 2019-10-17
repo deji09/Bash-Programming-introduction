@@ -93,8 +93,12 @@ repoName() {
         if [ "$found" == "true" ]; then
             # Prompts the user for a new name and changes it
             changeStr "What do you want to change $name to be? " name $repoConfigPath
+            # Prints a success message if the operations were successful
+            if [ $? -eq 0 ]; then
+                echo "Repository name has been successfully changed"
+            fi
         else
-            echo "Repository name is invalid"
+            echo "Error: Repository name is invalid"
         fi
     done
 }
@@ -102,6 +106,10 @@ repoName() {
 # Allows the user to change the default editor
 editor() {
     changeStr "New editor command: " editor $configPath
+    # Prints a success message if the operations were successful
+    if [ $? -eq 0 ]; then
+        echo "Editor command has been successfully changed"
+    fi
 }
 
 
@@ -121,8 +129,12 @@ autoCompile() {
         if [ "$found" == "true" ]; then
             # Enables/Disables automatic compilation
             changeBool "Would you like to turn off automatic compilation? [Y/n] " "Would you like to turn on automatic compilation? [Y/n] " makeOnStore $repoConfigPath
+            # Prints a success message if the operations were successful
+            if [ $? -eq 0 ]; then
+                echo "Autocompile status has been successfully changed"
+            fi
         else
-            echo "Repository name is invalid"
+            echo "Error: Repository name is invalid"
         fi
     done
 }
@@ -160,8 +172,8 @@ menu() {
             ;;
             *)
                 # Prints what the user's typed
-                echo "Invalid Option: $REPLY"
-                echo "Please enter an invalid"
+                echo "Error: Invalid Option $REPLY"
+                echo "Please enter a valid option"
             ;;
         esac
     done
