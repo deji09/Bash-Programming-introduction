@@ -139,7 +139,7 @@ runOption() {
             source $trackproPath/scripts/listrepos.sh $repoPaths;
         ;;
         "-p" | "--permissions")
-            echo permissions
+            # Used to change the permissions of repositories
             source $trackproPath/scripts/changepermissions.sh $target;
         ;;
         "-s" | "--store")
