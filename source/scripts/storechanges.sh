@@ -59,6 +59,7 @@ Store() {
         # Adds the file to the changes configuration record
         echo -e ":$user:$time:$file:" >> ./.trackpro/changes.conf
         fileCut=`echo $file | cut -c 3-`
+        echo $latestStore
         latecut=`echo $latestStore | cut -c -22`
         if [ -e "$latecut/$fileCut" ]; then
             diff $latecut/$fileCut $file>>./.trackpro/$time/$fileCut
