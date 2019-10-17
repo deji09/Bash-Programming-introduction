@@ -41,16 +41,15 @@ initialRecord() {
     # Uses the newline IFS to process files with spaces
     IFS=$'\n'
     # Loops through every file in the repository excluding the .trackpro folder
-    # find . -name "*" -print0 | while IFS= read -r -d '' file; do
     find . -type f -name "*" ! -path "./.trackpro/*" -print0 | while IFS= read -r -d '' file; do
+        # Cuts of the ./ from the command
         file=`echo $file | cut -c 3-`
+        # Gets a relative name as a failed attempt to get directories working
         file=$(realpath --relative-to="$newRepoPath" "$file")
         # Adds the file to the changes configuration record
         echo -e ":$(whoami):$time:$file:" >> $newRepoPath/.trackpro/changes.conf
         # Copies the file as a backup as an initial source
         cp -rpv $file $newRepoPath/.trackpro/$time
-        # source $trackproPath/scripts/cpx.sh $file $newRepoPath/.trackpro/$time
-        # rsync -Hv $file $newRepoPath/.trackpro/$time
     done
     # Resores the original IFS
     IFS="$OIFS"
