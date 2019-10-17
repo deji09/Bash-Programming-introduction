@@ -138,6 +138,10 @@ runOption() {
             # Lists the trackpro repositories stored in the trackpro configuration file
             source $trackproPath/scripts/listrepos.sh $repoPaths;
         ;;
+        "-p" | "--permissions")
+            # Used to change the permissions of repositories
+            source $trackproPath/scripts/changepermissions.sh $target;
+        ;;
         "-s" | "--store")
             # Stores changes of a trackpro repository
             source $trackproPath/scripts/storechanges.sh $target $configPath;

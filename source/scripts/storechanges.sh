@@ -19,8 +19,7 @@ setBasicVars() {
     # Uses the newline IFS to process files with spaces
     IFS=$'\n'
 }
-
-# Identifies the latest time we've currently stored changes
+# This stores the latest version of the file
 identifyLatestStore() {
     # Changes to the .trackpro directory which holds the records
     cd ./.trackpro
@@ -82,10 +81,16 @@ perFileStore() {
     fi
 }
 
-#
-store() {
+# Method that stores the changes in a file
+Store() {
+    echo $currentRepoPath
+    cd $currentRepoPath
     echo "Edits stored under " $user "'s username"
-    #
+
+# Autocompiles code if a
+autoCompile() {
+    # Loads in the variables from the repository's configuration file
+    source ./.trackpro/repo.conf
     mkdir ./.trackpro/$time
     touch 2changes.txt
     read -p'Type yes or Y to commit your changes, type anything else to decline writing commits ' choice
@@ -101,7 +106,20 @@ store() {
     # Link: https://unix.stackexchange.com/questions/9496/looping-through-files-with-spaces-in-the-names
     # Loops through every file in the repository excluding the .trackpro folder
     find . -type f -name "*" ! -path "./.trackpro/*" -print0 | while IFS= read -r -d '' file; do
-        perFileStore $file
+        # Adds the file to the changes configuration record
+        echo -e ":$user:$time:$file:" >> ./.trackpro/changes.conf
+        fileCut=`echo $file | cut -c 3-`
+        latecut=`echo $latestStore | cut -c 3-`
+        if [ -e "$latecut/$fileCut" ]; then
+        # Removes the symbols > and < in the diff method
+        diff $latecut/$fileCut $file | grep '^[->* ]'| tr -d "[:blank:]">>./.trackpro/$time/$fileCut
+        sed 's/>//' ./.trackpro/$time/$fileCut>>2changes.txt
+        cp 2changes.txt ./.trackpro/$time/$fileCut
+        rm 2changes.txt
+        else
+        # if the file is a new file then stores the changes for it too
+            cp -p $file $latecut/$fileCut
+        fi
     done
     rm 2changes.txt
     # Resores the original IFS
