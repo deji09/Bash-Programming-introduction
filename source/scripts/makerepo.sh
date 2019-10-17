@@ -43,7 +43,6 @@ initialRecord() {
     # Loops through every file in the repository excluding the .trackpro folder
     # find . -name "*" -print0 | while IFS= read -r -d '' file; do
     find . -type f -name "*" ! -path "./.trackpro/*" -print0 | while IFS= read -r -d '' file; do
-    # find . 
         file=`echo $file | cut -c 3-`
         file=$(realpath --relative-to="$newRepoPath" "$file")
         # Adds the file to the changes configuration record
