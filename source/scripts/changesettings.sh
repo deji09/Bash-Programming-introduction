@@ -58,6 +58,7 @@ changeBool() {
                 echo -e "$variableToChange=false" >> $fileToChange
             ;;
         esac
+    # Otherwise
     else
         # Asks the user to confirm to change the variable to true
         read -p "$displayStringIfFalse" yn
@@ -79,30 +80,37 @@ changeBool() {
 
 # Used to find the path from the appropriate repository
 findRepo() {
-    # 
+    # Runs through all the repositories stored in the configuration file
     for i in ${repoPaths[@]}; do
+        # Stores the path to a configuration file
         repoConfigPath=$i/.trackpro/repo.conf
+        # Imports the variables from the current configuration file
         source $repoConfigPath
+        # Checks if the name of this repository is the one we're trying to find
         if [ "$name" == "$repoInput" ]; then
+            # Confirms we've found the repository
             found=true
+            # Breaks the loop since we've found the repository we needed
             break;
         fi
     done
 }
 
+# Used to change the name of a repository
 repoName() {
-    echo $trackproPath
-    # 
+    # Lists all the repositories
     source $trackproPath/scripts/listrepos.sh $repoPaths
-    #
+    # Since we haven't found the repository yet
     found=false
-    #
+    # Runs until we find the appropriate repository
     while [ "$found" == "false" ]; do
         # Reads input from the user
         read -p "What repository would you like to change the name of? " repoInput
-        #
+        # Tries to find the repository of this name
         findRepo
+        # Checks if we've found the repository
         if [ "$found" == "true" ]; then
+            # Prompts the user for a new name and changes it
             changeStr "What do you want to change $name to be? " name $repoConfigPath
         else
             echo "Repository name is invalid"
@@ -110,11 +118,9 @@ repoName() {
     done
 }
 
+# Allows the user to change the default editor
 editor() {
-    # Asks the user for input and deletes the current command from the file
     changeStr "New editor command: " editor $configPath
-    # Adds the new editor variable to the file
-    # echo -e "editor=$input" >> $configPath
 }
 
 
@@ -122,16 +128,17 @@ editor() {
 autoCompile() {
     # Lists all the repositories
     source $trackproPath/scripts/listrepos.sh $repoPaths
-    #
+    # Since we haven't found the repository yet
     found=false
-    #
+    # Runs until we find the appropriate repository
     while [ "$found" == "false" ]; do
         # Reads input from the user
         read -p "What repository would you like to turn on/off automatic compilation? " repoInput
-        #
+        # Tries to find the repository of this name
         findRepo
-        # 
+        # Checks if we've found the repository
         if [ "$found" == "true" ]; then
+            # Enables/Disables automatic compilation
             changeBool "Would you like to turn off automatic compilation? [Y/n] " "Would you like to turn on automatic compilation? [Y/n] " makeOnStore $repoConfigPath
         else
             echo "Repository name is invalid"
@@ -153,14 +160,17 @@ menu() {
         # Chooses the function based on the user's statement
         case $opt in
             "Default editor")
+                # Allows the user to change the default editor
                 editor
                 break
             ;;
             "Change repository name")
+                # Used to change the name of a repository
                 repoName
                 break
             ;;
             "Enable/Disable automatic comilation")
+                # Allows the user to change if a repository auto-compiles when a change is stored
                 autoCompile
                 break
             ;;
@@ -181,7 +191,7 @@ main() {
     absolutePath
     # Sets the path to the main trackpro configuration file as imported from the main script
     configPath=$1
-    #
+    # Used to locate external scripts 
     trackproPath=$2
     # Imports the variables from this configuration file
     source $configPath
