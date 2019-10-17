@@ -13,7 +13,6 @@ setBasicVars() {
     time=$(date +%s)
     # Stores the current date and time in a human readable form
     now=$(date)
-    
     # Stores the current value of the internal field seperator
     OIFS="$IFS"
     # Adds the time created to the repo's configuration file
@@ -21,23 +20,29 @@ setBasicVars() {
     IFS=$'\n'
 }
 
-#
+# Identifies the latest time we've currently stored changes
 identifyLatestStore() {
     # Changes to the .trackpro directory which holds the records
     cd ./.trackpro
-    pwd
+    # Creates an array to store all the folders in the .trackpro folder
     declare -a folders
-    while IFS= read -r -d '' file; do
-        folders+=($file)
+    # Loops through all the folders
+    while IFS= read -r -d '' folder; do
+        # Appends the current folder to the array
+        folders+=($folder)
+    # Gets the name of the current folder
     done < <(find . -type d -name "*" -print0)
-    # echo "${folders[@]}"
+    # Stores how many folders that have been found
     declare -i foldersLength=${#folders[@]}
+    # Cuts off the first two characters which are ./ as they prevent us from creating other directories
     lateCut=`echo ${folders[$((foldersLength-1))]} | cut -c 3-`
+    # Stores the path to the folder with the latest changes
     latestStore=./.trackpro/$lateCut
+    # Changes back into the main repository
     cd $currentRepoPath
 }
 
-#
+# Autocompiles code if a 
 autoCompile() {
     # Loads in the variables from the repository's configuration file
     source ./.trackpro/repo.conf

@@ -7,7 +7,7 @@ setBasicVars() {
     targetInput=$1
     # Stores the path to the trackpro configuration file
     configPath=$2
-    # Stores the user's unmodified target
+    # Stores the user's current path
     userPath=$3
 }
 
