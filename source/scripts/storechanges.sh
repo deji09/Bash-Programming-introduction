@@ -112,7 +112,8 @@ autoCompile() {
         latecut=`echo $latestStore | cut -c 3-`
         if [ -e "$latecut/$fileCut" ]; then
         # Removes the symbols > and < in the diff method
-        diff $latecut/$fileCut $file | grep '^[->* ]'| tr -d "[:blank:]">>./.trackpro/$time/$fileCut
+        diff $latecut/$fileCut $file | grep '^[>* ]'| sed '/^[[:space:]]*$/d'>>./.trackpro/$time/$fileCut
+        touch 2changes.txt
         sed 's/>//' ./.trackpro/$time/$fileCut>>2changes.txt
         cp 2changes.txt ./.trackpro/$time/$fileCut
         rm 2changes.txt
