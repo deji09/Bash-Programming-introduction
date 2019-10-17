@@ -116,11 +116,11 @@ runOption() {
         ;;
         "-c" | "--changesettings")
             echo changesettings
-            source $trackproPath/scripts/changesettings.sh $configPath
+            source $trackproPath/scripts/changesettings.sh $configPath $trackproPath
         ;;
         "-e" | "--edit")
             echo editconfigs
-            source $trackproPath/scripts/editconfigs.sh $configPath
+            source $trackproPath/scripts/editconfigs.sh $configPath $trackproPath
         ;;
         "-h" | "--help")
             echo help

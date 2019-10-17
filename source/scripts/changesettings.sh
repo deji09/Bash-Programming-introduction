@@ -1,23 +1,6 @@
 #!/bin/bash
 # Changes settings in configuaration files that can be set by the user
 
-# Changes to the absolute path of the script, makes importing other scripts easier
-absolutePath() {
-    # Stores the current path the user is in, this is used in methods to identify
-    # paths the user has specified
-    userPath=$(pwd)
-    # Changes to the absolute path of the script
-    scriptPath=`dirname "$0"`
-    scriptPath=`( cd "$trackproPath" && pwd )`
-}
-
-setBasicVars() {
-    # Sets the path to the main trackpro configuration file as imported from the main script
-    configPath=$1
-    # Imports the variables from this configuration file
-    source $configPath
-}
-
 displayCurrentSettings() {
     echo "Current global settings:"
     echo "Configuration file: $configPath"
@@ -52,8 +35,9 @@ findRepo() {
 }
 
 repoName() {
+    echo $trackproPath
     # 
-    source $scriptPath/scripts/listrepos.sh $repoPaths
+    source $trackproPath/scripts/listrepos.sh $repoPaths
     #
     found=false
     #
@@ -111,9 +95,10 @@ changeBool() {
     fi
 }
 
+# Allows the user to change if a repository auto-compiles when a change is stored
 autoCompile() {
     # Lists all the repositories
-    source $scriptPath/scripts/listrepos.sh $repoPaths
+    source $trackproPath/scripts/listrepos.sh $repoPaths
     #
     found=false
     #
@@ -131,6 +116,7 @@ autoCompile() {
     done
 }
 
+# Displays the menu and processes the options available to the user
 menu() {
     # Credits to askubuntu user Dennis Williamson
     # Link: https://askubuntu.com/questions/1705/how-can-i-create-a-select-menu-in-a-shell-script
@@ -138,7 +124,7 @@ menu() {
     PS3='Please enter your choice: '
     # Defines the options for a user to select
     options=("Default editor" "Change repository name" "Enable/Disable automatic comilation" "Exit")
-    # Allows the user to type in their preffered option
+    # Allows the user to type in their prefered option
     select opt in "${options[@]}"
     do
         # Chooses the function based on the user's statement
@@ -167,11 +153,20 @@ menu() {
     done
 }
 
+# Contains the main program
 main() {
     absolutePath
-    setBasicVars $1
+    # Sets the path to the main trackpro configuration file as imported from the main script
+    configPath=$1
+    #
+    trackproPath=$2
+    # Imports the variables from this configuration file
+    source $configPath
+    # Displays the current settings 
     displayCurrentSettings
+    # Displays the menu and processes the options
     menu
 }
 
-main $1
+# Runs the main program
+main $1 $2

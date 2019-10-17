@@ -7,7 +7,7 @@ mainConfig() {
 
 repoConfig() {
     # 
-    source ./source/scripts/listrepos.sh $repoPaths
+    source $trackproPath/scripts/listrepos.sh $repoPaths
     #
     found=false
     #
@@ -32,6 +32,7 @@ repoConfig() {
 }
 
 configPath=$1
+trackproPath=$2
 source $configPath
 
 # Credits to askubuntu user Dennis Williamson
