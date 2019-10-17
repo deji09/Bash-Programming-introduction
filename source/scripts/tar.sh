@@ -1,10 +1,18 @@
 #!/bin/bash
 # Puts a version of a repository in a compressed file
 
-target=$1 #path to target repo
+target=$1 # path to target repo
 
-copyRepo=($(cp -r $target archivedRepo)) # copys the repo needed
+if [[ "$target" == "null" ]]; then # check if the repo user aims to compress is null
+	echo "Error: Invalid Input" # if so then print an error code
+else # if not then continue witht the method
+	repoName=$(basename $target) # get the name of the repository
 
-tar -cz copyRepo # archives it using tar command
-tar -t copyRepo.tar # lists contents of the tar file
-rm -r archivedRepo # deletes the copied repo
+	cp -r $target $repoName # copys the repo needed
+
+	echo "Your compressed repository contains:" # print message
+
+	tar -czf archivedRepo.tar.gz $repoName # archives it using tar command
+	tar -tf archivedRepo.tar.gz # lists contents of the tar file
+	rm -r $repoName # deletes the copied repos
+fi

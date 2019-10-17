@@ -143,7 +143,7 @@ runOption() {
         ;;
         "-t" | "--tar")
             echo tar
-            source $trackproPath/scripts/tar.sh $target $configPath;
+            source $trackproPath/scripts/tar.sh $target $trackproPath;
         ;;
         "-u" | "--undo")
             echo undo
