@@ -30,7 +30,7 @@ identifyLatestStore() {
     while IFS= read -r -d '' folder; do
         # Appends the current folder to the array
         folders+=($folder)
-    # Gets the name of the current folder
+        # Gets the name of the current folder
     done < <(find . -type d -name "*" -print0)
     # Stores how many folders that have been found
     declare -i foldersLength=${#folders[@]}
@@ -42,7 +42,7 @@ identifyLatestStore() {
     cd $currentRepoPath
 }
 
-# Autocompiles code if a 
+# Autocompiles code if a
 autoCompile() {
     # Loads in the variables from the repository's configuration file
     source ./.trackpro/repo.conf
@@ -65,14 +65,18 @@ commit() {
 }
 
 perFileStore() {
-    # 
+    #
     file=$1
     # Adds the file to the changes configuration record
     echo -e ":$user:$time:$file:" >> ./.trackpro/changes.conf
     fileCut=`echo $file | cut -c 3-`
-    latecut=`echo $latestStore | cut -c -22`
+    latecut=`echo $latestStore | cut -c 3-`
     if [ -e "$latecut/$fileCut" ]; then
-        diff $latecut/$fileCut $file>>./.trackpro/$time/$fileCut
+        diff $latecut/$fileCut $file | grep '^[->* ]'| tr -d "[:blank:]">>./.trackpro/$time/$fileCut
+        sed 's/>//' ./.trackpro/$time/$fileCut>>2changes.txt
+        cp 2changes.txt ./.trackpro/$time/$fileCut
+        # grep '^[->*]' ./.trackpro/$time/$fileCut>>./.trackpro/$time/$fileCut
+        rm 2changes.txt
     else
         cp -p $file $latecut/$fileCut
     fi
@@ -83,6 +87,15 @@ store() {
     echo "Edits stored under " $user "'s username"
     #
     mkdir ./.trackpro/$time
+    touch 2changes.txt
+    read -p'Type yes or Y to commit your changes, type anything else to decline writing commits ' choice
+    if [ "$choice" == "yes" ] || [ "$choice" == "Y" ]
+    then
+        echo "Please enter your  commits into the file:"
+        read commits
+        echo -e ":$user:$now:">>./.trackpro/Commits.conf
+        echo -e " [Commit Section] \n" $commits " \n [end] ">>./.trackpro/Commits.conf
+    fi
     
     # Credits to stackexchange user Mikel
     # Link: https://unix.stackexchange.com/questions/9496/looping-through-files-with-spaces-in-the-names
@@ -90,6 +103,9 @@ store() {
     find . -type f -name "*" ! -path "./.trackpro/*" -print0 | while IFS= read -r -d '' file; do
         perFileStore $file
     done
+    rm 2changes.txt
+    # Resores the original IFS
+    IFS="$OIFS"
 }
 
 #
@@ -98,7 +114,7 @@ main() {
     setBasicVars $1 $2
     # Changes into the repository
     cd $currentRepoPath
-    # 
+    #
     identifyLatestStore
     autoCompile
     store

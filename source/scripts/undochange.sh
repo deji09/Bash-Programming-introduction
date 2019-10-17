@@ -9,3 +9,13 @@ user="$(whoami)"
 time=$(date +%s)
 currentRepoPath=/home/ayodejishote/Desktop/trackpro/repo-scripts
 cd $currentRepoPath
+
+identifyLatestStore() {
+    pwd
+    cd ./.trackpro
+    local folders=$(ls -d -- */)
+    declare -i foldersLength=${#folders[@]}
+    # echo $foldersLength
+    latestStore=./.trackpro/${folders[$((foldersLength-1))]}
+    # echo $latestStore
+}
