@@ -132,7 +132,7 @@ runOption() {
         ;;
         "-m" | "--make")
             # Makes a trackpro repository
-            source $trackproPath/scripts/makerepo.sh $userTarget $configPath;
+            source $trackproPath/scripts/makerepo.sh $userTarget $configPath $userPath $trackproPath;
         ;;
         "-l" | "--list")
             # Lists the trackpro repositories stored in the trackpro configuration file
