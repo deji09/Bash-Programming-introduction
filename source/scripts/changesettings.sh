@@ -1,6 +1,7 @@
 #!/bin/bash
 # Changes settings in configuaration files that can be set by the user
 
+# Displays the current global settings to the user 
 displayCurrentSettings() {
     echo "Current global settings:"
     echo "Configuration file: $configPath"
@@ -9,10 +10,14 @@ displayCurrentSettings() {
     echo
 }
 
+# Used to change a variable that is a string
 changeStr() {
     echo
+    # Stores the text to prompt the user with
     local displayString=$1
+    # Stores the variable we are intending to change
     local variableToChange=$2
+    # Stores the file we are changing
     local fileToChange=$3
     # Reads input from the user
     read -p "$displayString" input
@@ -22,6 +27,57 @@ changeStr() {
     echo -e "$variableToChange=$input" >> $fileToChange
 }
 
+# Used to change a variable that is a boolean
+changeBool() {
+    echo
+    # Stores the text to prompt the user with, if the variable 
+    # we are trying to change is currently true
+    local displayStringIfTrue=$1
+    # Same only if it's false
+    local displayStringIfFalse=$2
+    # Stores the variable we are intending to change
+    local variableToChange=$3
+    # Stores the file we are changing
+    local fileToChange=$4
+    # Loads the variables from the file we are changing
+    source $fileToChange
+    # If the current variable we are trying to change is true
+    if [ "${!variableToChange}" == true ]; then
+        # Asks the user to confirm to change the variable to false
+        read -p "$displayStringIfTrue" yn
+        case $yn in
+            # If the user inputs something beginning with n, we do nothing
+            [Nn]* )
+                echo "No action taken"
+            ;;
+            # If the user enters any other input
+            * )
+                # Deletes the current value of the variable from the file
+                grep -v "$variableToChange" $fileToChange > $fileToChange.tmp && mv $fileToChange.tmp $fileToChange
+                # Adds the new variable to the file
+                echo -e "$variableToChange=false" >> $fileToChange
+            ;;
+        esac
+    else
+        # Asks the user to confirm to change the variable to true
+        read -p "$displayStringIfFalse" yn
+        case $yn in
+            # If the user inputs something beginning with n, we do nothing
+            [Nn]* )
+                echo "No action taken"
+            ;;
+            # If the user enters any other input
+            * )
+                # Deletes the current value of the variable from the file
+                grep -v "$variableToChange" $fileToChange > $fileToChange.tmp && mv $fileToChange.tmp $fileToChange
+                # Adds the new variable to the file
+                echo -e "$variableToChange=true" >> $fileToChange
+            ;;
+        esac
+    fi
+}
+
+# Used to find the path from the appropriate repository
 findRepo() {
     # 
     for i in ${repoPaths[@]}; do
@@ -61,39 +117,6 @@ editor() {
     # echo -e "editor=$input" >> $configPath
 }
 
-changeBool() {
-    local displayStringIfTrue=$1
-    local displayStringIfFalse=$2
-    local variableToChange=$3
-    local fileToChange=$4
-    source $fileToChange
-    if [ "${!variableToChange}" == true ]; then
-        read -p "$displayStringIfTrue" yn
-        case $yn in
-            [Yy]* )
-                #
-                grep -v "$variableToChange" $fileToChange > $fileToChange.tmp && mv $fileToChange.tmp $fileToChange
-                # Adds the new editor variable to the file
-                echo -e "$variableToChange=false" >> $fileToChange
-            ;;
-            * )
-                echo "No action taken"
-            ;;
-        esac
-    else
-        read -p "$displayStringIfFalse" yn
-        case $yn in
-            [Nn]* )
-                echo "No action taken"
-            ;;
-            * )
-                grep -v "$variableToChange" $fileToChange > $fileToChange.tmp && mv $fileToChange.tmp $fileToChange
-                # Adds the new editor variable to the file
-                echo -e "$variableToChange=true" >> $fileToChange
-            ;;
-        esac
-    fi
-}
 
 # Allows the user to change if a repository auto-compiles when a change is stored
 autoCompile() {

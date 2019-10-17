@@ -1,5 +1,6 @@
-#/bin/bash
+#!/bin/bash
 # Creates a repository
+
 # Stores the repository name or path we are trying to create
 target=$1
 # Stores the location of the trackpro configuration file
