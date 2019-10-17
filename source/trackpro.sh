@@ -91,7 +91,7 @@ interpretTarget() {
     # Checks if a user has entered an argument for the target (repository name or path)
     if [ "$1" == "" ]; then
         target=null
-        # Checks if the user wants to do something to all repositories
+    # Checks if the user wants to do something to all repositories
     elif [ "$1" == "all" ]; then
         target=all
     else
@@ -100,7 +100,7 @@ interpretTarget() {
     fi
 }
 
-#
+# Runs the user's desired option and starts up any appropriate external scripts
 runOption() {
     # Stores the user's argument for the option as userArg
     userArg=$1
@@ -108,57 +108,61 @@ runOption() {
     # As opposed to target this has not been interpreted by the program
     # which is useful for some methods
     userTarget=$2
+    # Runs the appropriate option
     case "$userArg" in
         "-a" | "--access")
-            echo access
+            # Allows the user to access a repository by changing into it
             source $trackproPath/scripts/accessfilerepo.sh $target
         ;;
         "-c" | "--changesettings")
-            echo changesettings
-            source $trackproPath/scripts/changesettings.sh $configPath
+            # Changes settings in configuaration files that can be set by the user
+            source $trackproPath/scripts/changesettings.sh $configPath $trackproPath
         ;;
         "-e" | "--edit")
-            echo editconfigs
-            source $trackproPath/scripts/editconfigs.sh $configPath
+            # Allows the user to edit configuration files in their set editor
+            source $trackproPath/scripts/editconfigs.sh $configPath $trackproPath
         ;;
         "-h" | "--help")
-            echo help;
+            # Help script to display a help guide
             source $trackproPath/scripts/help.sh;
         ;;
         "-i" | "--import")
-            echo import
+            # Imports a trackpro respository from a different computer
             source $trackproPath/scripts/importrepo.sh $userTarget $configPath $userPath
         ;;
         "-m" | "--make")
-            echo make
-            source $trackproPath/scripts/makerepo.sh $userTarget $configPath;
+            # Makes a trackpro repository
+            source $trackproPath/scripts/makerepo.sh $userTarget $configPath $userPath $trackproPath;
         ;;
         "-l" | "--list")
-            echo list
+            # Lists the trackpro repositories stored in the trackpro configuration file
             source $trackproPath/scripts/listrepos.sh $repoPaths;
         ;;
         "-s" | "--store")
-            echo store
-            source $trackproPath/scripts/storechanges.sh $target $repoPaths;
+            # Stores changes of a trackpro repository
+            source $trackproPath/scripts/storechanges.sh $target $configPath;
         ;;
         "-t" | "--tar")
-            echo tar
+            # Compresses a version of a trackpro repository
             source $trackproPath/scripts/tar.sh $target $configPath;
         ;;
         "-u" | "--undo")
-            echo undo
+            # Undoes a change built into a trackpro repository
             source $trackproPath/scripts/undochange.sh $target $configPath;
         ;;
         "-v" | "--view")
-            echo view
+            # Displays the list of all files within the repository recursively
             ls -R $target
         ;;
         * )
+            # Displays an error message to the user 
             echo "Error: Option Argument $userArg is invalid"
+            # Help script to display a help guide
             source $trackproPath/scripts/help.sh;
     esac
 }
 
+# Holds the main program, run on launch
 main() {
     # Displays the welcome message
     echo "Welcome to trackpro (version $version)"
