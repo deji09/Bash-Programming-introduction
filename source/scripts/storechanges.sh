@@ -52,17 +52,6 @@ autoCompile() {
     fi
 }
 
-commit() {
-    read -p 'Type yes or Y to commit your changes, type anything else to decline writing commits ' choice
-    if [ "$choice" == "yes" ] || [ "$choice" == "Y" ]
-    then
-        echo "Please enter your  commits into the file:"
-        read commits
-        echo -e ":$user:$now:">>./.trackpro/commits.conf
-        echo -e " [Commit Section] \n" $commits " \n [end] ">>./.trackpro/commits.conf
-    fi
-}
-
 # Method that stores the changes in a file
 store() {
     echo $currentRepoPath
@@ -71,8 +60,10 @@ store() {
     mkdir ./.trackpro/$time
     # Takes in the user input of if they want commits or not
     read -p'Commit your changes, type anything else to decline writing commits [N/y]' choice
-    case $yn in
+    # This takes in the user choice 
+    case $choice in
         [Yy]* )
+        # Puts in the commits into the commits file
             echo "Please enter your  commits into the file:"
             read commits
             echo -e ":$user:$now:">>./.trackpro/Commits.conf
@@ -112,6 +103,11 @@ main() {
     # Sets basic variables to be referenced to later in the script
     setBasicVars $1 $2
     # Changes into the repository
+    if [ "$currentRepoPath" == "null" ] 
+    then
+    echo "This file path does not exist"
+    echo "To use this method you can import the repository using the -i command or make one using the -m command."
+    else
     cd $currentRepoPath
     #
     identifyLatestStore
@@ -119,6 +115,7 @@ main() {
     store
     # Restores the original IFS
     IFS=$OIFS
+    fi
 }
 
 main $1 $2
