@@ -7,9 +7,11 @@
 | **Max Fyall** | 180011724 |
 | **Max Kelly** | 180004073 |
 
-
 ## Boastful Introduction
 Designed with meticulous detail, we present to you our own version control system. No where has seen anything like this before. It's also our group project for the module Computer Systems 2A at the University of Dundee.
+
+## Documentation
+The documenation folder contains the report and the joint peer assessment sheet.
 
 ## Installation
 ### Types of Installation
