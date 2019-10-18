@@ -33,15 +33,12 @@ install() {
     cp -vr ./source/scripts $installPath
     # Checks if there's already a configuaration file or 
     # if the deep option has been selected which overwrites it
-    if [ ! -f $configPath ] || [ "$option_1" == "--deep" ]; then
+    if [ ! -d "$configPath" ] || [ "$option_1" == "--deep" ]; then
         # Copies the main configuration file
         cp -v ./source/config/trackpro.conf $configPath
     fi
     # Edits the user's PATH at launch so the user can just type trackpro in every directory
     echo -e "\n# trackpro\nexport PATH=\"$installPath:\$PATH"\" >> $profilePath
-    # Edits the user's PATH for the current session for the same reason
-    # export PATH="$installPath:$PATH"
-    # source $installPath
     echo
     echo "Installation successful"
 }
