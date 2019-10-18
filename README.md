@@ -68,8 +68,7 @@ trackpro [options] [target]
 
 | Shorthand Commands | Full commands | Target |
 | --- | --- | --- |
-| -a, -i, -m, -t, -u, -v | --access, --import, --make, --tar, --undo, --view | Repository name or path |
-| -s | --store | Repository name, path or all |
+| -a, -i, -m, -s, -t, -u, -v | --access, --import, --make, --store, --tar, --undo, --view | Repository name or path |
 | -c, -h, -l | --changesettings, --help, --list | No target required |
 
 ## Source structure
