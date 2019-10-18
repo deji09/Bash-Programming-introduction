@@ -96,7 +96,7 @@ store() {
         rm 2changes.txt
         else
         # if the file is a new file then stores the changes for it too
-            cp -p $file $latecut/$fileCut
+            cp -p $file ./.trackpro/$time
         fi
     done
     # Resores the original IFS

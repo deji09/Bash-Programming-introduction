@@ -1,6 +1,16 @@
 #!/bin/bash
 # trackpro Installation script
 
+# Changes to the absolute path of the script, makes importing other scripts easier
+absolutePath() {
+    # Stores the current path the user is in, this is used in methods to identify
+    # paths the user has specified
+    userPath=$(pwd)
+    # Changes to the absolute path of the script
+    trackproPath=`dirname "$0"`
+    trackproPath=`( cd "$trackproPath" && pwd )`
+}
+
 # Used to conduct a generic install which uses passed parameters to configure it for a 
 # global or local installation
 install() {
@@ -8,6 +18,10 @@ install() {
     installPath=$1 
     configPath=$2
     profilePath=$3
+    # 
+    absolutePath
+    #
+    cd $trackproPath
     # Checks if there isn't an installation directory already
     if [ ! -d $installPath ]; then 
         # Creates the path for the installation
