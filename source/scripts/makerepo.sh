@@ -18,6 +18,9 @@ setBasicVars() {
 
 # Setups the repository configuration
 setupConfig() {
+    if [ ! -d $newRepoPath ]; then
+        mkdir $newRepoPath
+    fi
     # Changes to the user's path
     cd $newRepoPath
     # Creates a trackpro configuration folder
