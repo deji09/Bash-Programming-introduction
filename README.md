@@ -64,6 +64,13 @@ trackpro [options] [target]
 | -u | --undo | Undoes a change built into a trackpro repository |
 | -v | --view | Displays the list of all files within the repository recursively |
 
+#### Unimplemented option
+Due to issues with changing permissions, it is not offically on our help script, but it can still be accessed in the final program.
+
+| Shorthand Command | Full Command | Action |
+| --- | --- | --- |
+| -p | --permissions | Allows the user to change permissions of repositories |
+
 ### Target
 
 | Shorthand Commands | Full commands | Target |
