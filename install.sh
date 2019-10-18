@@ -35,8 +35,8 @@ install() {
     # if the deep option has been selected which overwrites it
     if [ ! -d "$configPath" ] || [ "$option_1" == "--deep" ]; then
         # Copies the main configuration file
-        # cp -v ./source/config/trackpro.conf $configPath
-        rsync -av ./source/config/trackpro.conf $configPath
+        cp -v ./source/config/trackpro.conf $configPath
+        # rsync -av ./source/config/trackpro.conf $configPath
     fi
     # Edits the user's PATH at launch so the user can just type trackpro in every directory
     echo -e "\n# trackpro\nexport PATH=\"$installPath:\$PATH"\" >> $profilePath
@@ -74,16 +74,16 @@ localInstall() {
     # Stores where trackpro will be installed
     local installPath=$HOME/bin/trackpro
     # Stores where the main trackpro configuration file will be
-    local configPath=$HOME/.trackpro
+    local configPath=$HOME/.trackpro/trackpro.conf
     # Stores where the user's bash profile is located
     local profilePath=$HOME/.bashrc
     echo
     echo "Local Installation started"
     # Checks if there isn't a configuration directory already
-    # if [ ! -d $configPath ]; then 
-    #     # Creates the directory for the main configuration file
-    #     mkdir -pv $configPath
-    # fi
+    if [ ! -d $configPath ]; then 
+        # Creates the directory for the main configuration file
+        mkdir -pv $HOME/.trackpro/
+    fi
     # Installs the application passing in the appropriate values
     install $installPath $configPath $profilePath
     # Seems to be the only reliable way I've found to reload the path for a local install within the script
