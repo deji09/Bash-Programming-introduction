@@ -158,7 +158,11 @@ runOption() {
         ;;
         "-v" | "--view")
             # Displays the list of all files within the repository recursively
-            ls -R $target
+            if [ "$target" != "null" ]; then
+                ls -R $target
+            else 
+                echo "Error: Repository doesn't exist"
+            fi
         ;;
         * )
             # Displays an error message to the user 
