@@ -83,6 +83,8 @@ interpretOption() {
         echo "Error: Option argument required"
         # Displays the help screen
         source $trackproPath/scripts/help.sh;
+        # 
+        exit 1
     fi
 }
 
