@@ -1,9 +1,8 @@
 #!/bin/bash
 # changes the permissions of every file stored
+# SCRIPT NOT IMPLEMENTED, IF YOU WISH TO RUN TYPE -p FOR OPTION
 
 target=$1 # gets the repo user wants to edit permissions
-
-repoName=$(basename $target) # get the name of the repo from the file path
 
 if [[ "$target" == null ]]; then # check if the user has not entererd a repo to edit
 	echo "Error: Invalid Input" # output an error message if true
