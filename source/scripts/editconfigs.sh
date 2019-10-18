@@ -25,7 +25,7 @@ repoConfig() {
             # Opens the repository's configuration file with the default editor
             $editor $repoConfigPath
         else
-            echo "Repository name is invalid"
+            echo "Error: Repository name is invalid"
         fi
     done
 }
@@ -58,8 +58,8 @@ menu() {
             ;;
             *)
                 # Prints what the user's typed
-                echo "Invalid Option: $REPLY"
-                echo "Please enter an invalid"
+                echo "Error: Invalid Option $REPLY"
+                echo "Please enter a valid option"
             ;;
         esac
     done
