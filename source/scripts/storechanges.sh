@@ -52,32 +52,27 @@ autoCompile() {
     fi
 }
 
-commit() {
-    read -p 'Type yes or Y to commit your changes, type anything else to decline writing commits ' choice
-    if [ "$choice" == "yes" ] || [ "$choice" == "Y" ]
-    then
-        echo "Please enter your  commits into the file:"
-        read commits
-        echo -e ":$user:$now:">>./.trackpro/commits.conf
-        echo -e " [Commit Section] \n" $commits " \n [end] ">>./.trackpro/commits.conf
-    fi
-}
-
 # Method that stores the changes in a file
 store() {
     echo $currentRepoPath
     cd $currentRepoPath
     echo "Edits stored under " $user "'s username"
     mkdir ./.trackpro/$time
-    
-    read -p'Type yes or Y to commit your changes, type anything else to decline writing commits ' choice
-    if [ "$choice" == "yes" ] || [ "$choice" == "Y" ]
-    then
-        echo "Please enter your  commits into the file:"
-        read commits
-        echo -e ":$user:$now:">>./.trackpro/Commits.conf
-        echo -e " [Commit Section] \n" $commits " \n [end] ">>./.trackpro/Commits.conf
-    fi
+    # Takes in the user input of if they want commits or not
+    read -p'Commit your changes, type anything else to decline writing commits [N/y]' choice
+    # This takes in the user choice 
+    case $choice in
+        [Yy]* )
+        # Puts in the commits into the commits file
+            echo "Please enter your  commits into the file:"
+            read commits
+            echo -e ":$user:$now:">>./.trackpro/Commits.conf
+            echo -e " [Commit Section] \n" $commits " \n [end] ">>./.trackpro/Commits.conf
+        ;;
+        * )
+            echo "No commit added"
+        ;;
+    esac
     
     # Credits to stackexchange user Mikel
     # Link: https://unix.stackexchange.com/questions/9496/looping-through-files-with-spaces-in-the-names
@@ -88,14 +83,14 @@ store() {
         fileCut=`echo $file | cut -c 3-`
         latecut=`echo $latestStore | cut -c 3-`
         if [ -e "$latecut/$fileCut" ]; then
-        # Removes the symbols > and < in the diff method
-        diff $latecut/$fileCut $file | grep '^[>* ]'| sed '/^[[:space:]]*$/d'>>./.trackpro/$time/$fileCut
-        touch 2changes.txt
-        sed 's/>//' ./.trackpro/$time/$fileCut>>2changes.txt
-        cp 2changes.txt ./.trackpro/$time/$fileCut
-        rm 2changes.txt
+            # Removes the symbols > and < in the diff method
+            diff $latecut/$fileCut $file | grep '^[>* ]'| sed '/^[[:space:]]*$/d'>>./.trackpro/$time/$fileCut
+            touch 2changes.txt
+            sed 's/>//' ./.trackpro/$time/$fileCut>>2changes.txt
+            cp 2changes.txt ./.trackpro/$time/$fileCut
+            rm 2changes.txt
         else
-        # if the file is a new file then stores the changes for it too
+            # if the file is a new file then stores the current version as the original version
             cp -p $file ./.trackpro/$time
         fi
     done
@@ -108,6 +103,11 @@ main() {
     # Sets basic variables to be referenced to later in the script
     setBasicVars $1 $2
     # Changes into the repository
+    if [ "$currentRepoPath" == "null" ] 
+    then
+    echo "This file path does not exist"
+    echo "To use this method you can import the repository using the -i command or make one using the -m command."
+    else
     cd $currentRepoPath
     #
     identifyLatestStore
@@ -115,6 +115,7 @@ main() {
     store
     # Restores the original IFS
     IFS=$OIFS
+    fi
 }
 
 main $1 $2

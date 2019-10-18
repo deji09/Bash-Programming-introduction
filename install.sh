@@ -33,15 +33,13 @@ install() {
     cp -vr ./source/scripts $installPath
     # Checks if there's already a configuaration file or 
     # if the deep option has been selected which overwrites it
-    if [ ! -f $configPath ] || [ "$option_1" == "--deep" ]; then
+    if [ ! -d "$configPath" ] || [ "$option_1" == "--deep" ]; then
         # Copies the main configuration file
         cp -v ./source/config/trackpro.conf $configPath
+        # rsync -av ./source/config/trackpro.conf $configPath
     fi
     # Edits the user's PATH at launch so the user can just type trackpro in every directory
     echo -e "\n# trackpro\nexport PATH=\"$installPath:\$PATH"\" >> $profilePath
-    # Edits the user's PATH for the current session for the same reason
-    # export PATH="$installPath:$PATH"
-    # source $installPath
     echo
     echo "Installation successful"
 }
@@ -63,6 +61,9 @@ globalInstall() {
         # Edits the user's PATH for the current session for the same reason
         # This can be a bit temperamental 
         export PATH="$installPath:$PATH"
+        # Seems to be the only reliable way I've found to reload the path for a local install within the script
+        # Although it may still be temperamental 
+        exec /bin/bash
     else
         echo "Installation aborted: Superuser privleges required"
     fi
@@ -73,7 +74,7 @@ localInstall() {
     # Stores where trackpro will be installed
     local installPath=$HOME/bin/trackpro
     # Stores where the main trackpro configuration file will be
-    local configPath=$HOME/.trackpro
+    local configPath=$HOME/.trackpro/trackpro.conf
     # Stores where the user's bash profile is located
     local profilePath=$HOME/.bashrc
     echo
@@ -81,7 +82,7 @@ localInstall() {
     # Checks if there isn't a configuration directory already
     if [ ! -d $configPath ]; then 
         # Creates the directory for the main configuration file
-        mkdir -pv $configPath
+        mkdir -pv $HOME/.trackpro/
     fi
     # Installs the application passing in the appropriate values
     install $installPath $configPath $profilePath
