@@ -93,9 +93,6 @@ interpretTarget() {
     # Checks if a user has entered an argument for the target (repository name or path)
     if [ "$1" == "" ]; then
         target=null
-    # Checks if the user wants to do something to all repositories
-    elif [ "$1" == "all" ]; then
-        target=all
     else
         # Sets a target based on finding the repository's name in its path
         getRepoPath $1
