@@ -1,4 +1,0 @@
- [Commit Section] 
- hi there  
- [end] 
-\n

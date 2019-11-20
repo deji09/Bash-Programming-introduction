@@ -83,6 +83,8 @@ interpretOption() {
         echo "Error: Option argument required"
         # Displays the help screen
         source $trackproPath/scripts/help.sh;
+        # 
+        exit 1
     fi
 }
 
@@ -91,9 +93,6 @@ interpretTarget() {
     # Checks if a user has entered an argument for the target (repository name or path)
     if [ "$1" == "" ]; then
         target=null
-    # Checks if the user wants to do something to all repositories
-    elif [ "$1" == "all" ]; then
-        target=all
     else
         # Sets a target based on finding the repository's name in its path
         getRepoPath $1
@@ -138,6 +137,7 @@ runOption() {
             # Lists the trackpro repositories stored in the trackpro configuration file
             source $trackproPath/scripts/listrepos.sh $repoPaths;
         ;;
+        # SCRIPT NOT IMPLEMENTED
         "-p" | "--permissions")
             # Used to change the permissions of repositories
             source $trackproPath/scripts/changepermissions.sh $target;
@@ -156,7 +156,11 @@ runOption() {
         ;;
         "-v" | "--view")
             # Displays the list of all files within the repository recursively
-            ls -R $target
+            if [ "$target" != "null" ]; then
+                ls -R $target
+            else 
+                echo "Error: Repository doesn't exist"
+            fi
         ;;
         * )
             # Displays an error message to the user 
