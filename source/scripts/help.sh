@@ -17,6 +17,5 @@ echo -e " -u, --undo\t\t Undoes a change built into a trackpro repository"
 echo -e " -v, --view\t\t Displays the list of all files within the repository recursively"
 echo
 echo "Target:"
-echo -e " -a, -i, -m, -t, -u, -v, --access, --import, --make, --tar, --undo\t Repository name or path"
-echo -e " -s, --store\t\t\t\t\t\t\t\t Repository name, path or all"
+echo -e " -a, -i, -m, -s, -t, -u, -v, --access, --import, --make, --store, --tar, --undo\t Repository name or path"
 echo -e " -c, -e, -h, -l, ---changesettings, --edit, --help, --list\t\t No target required"
