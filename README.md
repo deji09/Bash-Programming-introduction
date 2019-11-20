@@ -3,9 +3,9 @@
 
 |**Name**|**Matriculation Number**|
 | --- | --- |
-| **Ayodeji Shote** | 180004145 |
-| **Max Fyall** | 180011724 |
-| **Max Kelly** | 180004073 |
+| **Ayodeji Shote** | Censored |
+| **Max Fyall** | Censored |
+| **Max Kelly** | Censored |
 
 ## Boastful Introduction
 Designed with meticulous detail, we present to you our own version control system. No where has seen anything like this before. It's also our group project for the module Computer Systems 2A at the University of Dundee.
