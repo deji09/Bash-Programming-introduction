@@ -30,7 +30,7 @@ main() {
     # Checks if the folder we're trying to import exists
     if [[ -e $targetInput ]]; then
         # Checks if the folder we're trying to import has appropriate configuration files
-        if [[ -e $targetInput/.trackpro/repo.conf ]] && [[ -e $targetInput/.trackpro/changes.conf ]]; then
+        if [[ -e $targetInput/.trackpro/repo.conf ]]; then
             # Imports the repository
             editRepoPath
             # Prints a success message if the operations were successful

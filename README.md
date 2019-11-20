@@ -3,13 +3,15 @@
 
 |**Name**|**Matriculation Number**|
 | --- | --- |
-| **Ayodeji Shote** | 180004145 |
-| **Max Fyall** | 180011724 |
-| **Max Kelly** | 180004073 |
-
+| **Ayodeji Shote** | Censored |
+| **Max Fyall** | Censored |
+| **Max Kelly** | Censored |
 
 ## Boastful Introduction
 Designed with meticulous detail, we present to you our own version control system. No where has seen anything like this before. It's also our group project for the module Computer Systems 2A at the University of Dundee.
+
+## Documentation
+The documenation folder contains the report and the joint peer assessment sheet.
 
 ## Installation
 ### Types of Installation
@@ -64,12 +66,18 @@ trackpro [options] [target]
 | -u | --undo | Undoes a change built into a trackpro repository |
 | -v | --view | Displays the list of all files within the repository recursively |
 
+#### Unimplemented option
+Due to issues with changing permissions, it is not offically on our help script, but it can still be accessed in the final program.
+
+| Shorthand Command | Full Command | Action |
+| --- | --- | --- |
+| -p | --permissions | Allows the user to change permissions of repositories |
+
 ### Target
 
 | Shorthand Commands | Full commands | Target |
 | --- | --- | --- |
-| -a, -i, -m, -t, -u, -v | --access, --import, --make, --tar, --undo, --view | Repository name or path |
-| -s | --store | Repository name, path or all |
+| -a, -i, -m, -s, -t, -u, -v | --access, --import, --make, --store, --tar, --undo, --view | Repository name or path |
 | -c, -h, -l | --changesettings, --help, --list | No target required |
 
 ## Source structure

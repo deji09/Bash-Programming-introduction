@@ -33,7 +33,7 @@ install() {
     cp -vr ./source/scripts $installPath
     # Checks if there's already a configuaration file or 
     # if the deep option has been selected which overwrites it
-    if [ ! -d "$configPath" ] || [ "$option_1" == "--deep" ]; then
+    if [ ! -f "$configPath" ] || [ "$option_1" == "--deep" ]; then
         # Copies the main configuration file
         cp -v ./source/config/trackpro.conf $configPath
         # rsync -av ./source/config/trackpro.conf $configPath
